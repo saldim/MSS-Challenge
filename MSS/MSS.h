@@ -1,93 +1,98 @@
 #pragma once
 #include <math.h> 
 
-/**
- * Фунция вычисляющая среднее арифметическое массива измерений
- * Параметры:
- * +double measures - массив измерений
- * +int n - кол-во измерений
- * Автор: Сидоркин Владислав
- */
-double Average(double *measures, int n) { 
-	double sum = 0;
-	for (int i = 0; i < n; i++) {
-		sum += measures[i];
+namespace MSS {
+
+	/**
+	 * Фунция вычисляющая среднее арифметическое массива измерений
+	 * Параметры:
+	 * +double measures - массив измерений
+	 * +int n - кол-во измерений
+	 * Автор: Сидоркин Владислав
+	 */
+	double Average(double *measures, int n) {
+		double sum = 0;
+		for (int i = 0; i < n; i++) {
+			sum += measures[i];
+		}
+		return sum / n;
 	}
-	return sum/n;
-}
 
-/**
- * Фунция вычисляющая среднеквадратичное отклонение массива измерений
- * Параметры:
- * +double measures - массив измерений
- * +int n - кол-во измерений
- * Автор: Сидоркин Владислав
- */
-double stdDeviation(double *measures, int n) {
-	double sum = 0;
-	for (int i = 0; i < n; i++) {
-		sum += (measures[i] - Average(measures, n))*(measures[i] - Average(measures, n));
+	/**
+	 * Фунция вычисляющая среднеквадратичное отклонение массива измерений
+	 * Параметры:
+	 * +double measures - массив измерений
+	 * +int n - кол-во измерений
+	 * Автор: Сидоркин Владислав
+	 */
+	double StdDeviation(double *measures, int n) {
+		double sum = 0;
+		for (int i = 0; i < n; i++) {
+			sum += pow(measures[i] - Average(measures, n), 2);
+		}
+		return sqrt(sum / (n - 1));
 	}
-	return sqrt(sum / (n-1));
-}
 
-/**
- * Фунция вычисляющая среднеквадратичную погрешность массива измерений
- * Параметры:
- * +double measures - массив измерений
- * +int n - кол-во измерений
- * Автор: Сидоркин Владислав
- */
-double MeanSquareError(double *measures, int n) {
-	return stdDeviation(measures, n)/sqrt(n);
-}
-
-/**
- * Функция сортирующая по возрастанию массив результатов измерений
- * Параметры:
- * +double measures - массив измерений
- * +int n - кол-во измерений
- * Автор: Нигаматьянов Рафис
- */
-void Sort(double *measures, int n) {
-	double temp;
-	for (int i = 0; i < n - 1; i++) {
-		for (int j = 0; j < n - i - 1; j++)
-			if (measures[j] > measures[j + 1]) {
-                temp = measures[j];
-				measures[j] = measures[j + 1];
-				measures[j + 1] = temp;
-			}
+	/**
+	 * Фунция вычисляющая среднеквадратичную погрешность массива измерений
+	 * Параметры:
+	 * +double measures - массив измерений
+	 * +int n - кол-во измерений
+	 * Автор: Сидоркин Владислав
+	 */
+	double MeanSquareError(double *measures, int n) {
+		return StdDeviation(measures, n) / sqrt(n);
 	}
-}
 
-/**
- * Прототип функции определяющий является ли i-ый результат измерения промахом 
- * Параметры:
- * +int i - переменная
- * +double q - уровень значимости
- * +double measures - массив измерений
- * +int n - кол-во измерений
- * Автор: Нигаматьянов Рафис
- */
-bool isFailByRomanovsky(int i, double q, double *measures, int n) {
-	double beta = abs(Average(measures, n) - measures[i]) / stdDeviation(measures, n);
-	//TODO: Реализовать сравнение 
-	return 0;
-}
-
-/**
-  * Прототип функции для определения наличия систематической погрешности критерием Аббе
-  * Параметры:
-  * +double q - уровень значимости
-  * +double measures - массив измерений
-  * +int n - кол-во измерений
-  * Автор: Нигаматьянов Рафис
-  */ 
-bool IsSystematicError(double q, double *measures, int n) {
-	int sum = 0;
-	for (int i = 0; i < n - 1; i++) {
-		sum += (measures[i + 1] - measures[i]) * (measures[i + 1] - measures[i]);
+	/**
+	 * Функция сортирующая по возрастанию массив результатов измерений
+	 * Параметры:
+	 * +double measures - массив измерений
+	 * +int n - кол-во измерений
+	 * Автор: Нигаматьянов Рафис
+	 */
+	void Sort(double *measures, int n) {
+		double temp;
+		for (int i = 0; i < n - 1; i++) {
+			for (int j = 0; j < n - i - 1; j++)
+				if (measures[j] > measures[j + 1]) {
+					temp = measures[j];
+					measures[j] = measures[j + 1];
+					measures[j + 1] = temp;
+				}
+		}
 	}
-    return ((sum / (2 * (n - 1)))*(sum / (2 * (n - 1)))) / (stdDeviation(measures, n)*stdDeviation(measures, n));
+
+	/**
+	 * Прототип функции определяющий является ли i-ый результат измерения промахом
+	 * Параметры:
+	 * +int i - переменная
+	 * +double q - уровень значимости
+	 * +double measures - массив измерений
+	 * +int n - кол-во измерений
+	 * Автор: Нигаматьянов Рафис
+	 */
+	bool IsFailByRomanovsky(int i, double q, double *measures, int n) {
+		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
+		//TODO: Реализовать сравнение 
+		return 0;
+	}
+
+	/**
+	  * Прототип функции для определения наличия систематической погрешности критерием Аббе
+	  * Параметры:
+	  * +double q - уровень значимости
+	  * +double measures - массив измерений
+	  * +int n - кол-во измерений
+	  * Автор: Нигаматьянов Рафис
+	  */
+	bool IsSystematicError(double q, double *measures, int n) {
+		int sum = 0;
+		for (int i = 0; i < n - 1; i++) {
+			sum += pow(measures[i + 1] - measures[i], 2);
+		}
+		double V = (sum / (2 * (n - 1))) / pow(StdDeviation(measures, n), 2);
+		//TODO: Реализовать сравнение 
+		return 0;
+	}
 }

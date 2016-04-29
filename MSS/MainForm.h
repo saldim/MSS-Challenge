@@ -1,4 +1,5 @@
 #pragma once
+#include "MSS.h"
 
 namespace MSS {
 
@@ -125,21 +126,21 @@ namespace MSS {
 
 		}
 #pragma endregion
-	private: void underconstructionbox()
+	private: void UnderConstructionBox()
 	{
-		MessageBox::Show(this, "Under construction", "Информация");
+		MessageBox::Show(this, L"Under construction", L"Информация");
 	}	
 
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		underconstructionbox();
+		UnderConstructionBox();
 	}
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		underconstructionbox();
+		UnderConstructionBox();
 	}
 
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-		underconstructionbox();
+		UnderConstructionBox();
 	}
 };
 }

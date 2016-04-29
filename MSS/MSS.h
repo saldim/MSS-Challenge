@@ -61,7 +61,6 @@ void Sort(double *measures, int n) {
 	}
 }
 
-
 /**
 * Прототип функции определяющий является ли промахом результат измерений
 * Параметры:
@@ -74,6 +73,7 @@ void Sort(double *measures, int n) {
 bool isFailByRomanovsky(int i, double q, double *measures, int n) {
 	abs(Average(measures, n) - measures[i]) / stdDeviation(measures, n);
 }
+
 /**
 * Прототип функции определяющий является ли промахом результат измерений
 * Параметры:

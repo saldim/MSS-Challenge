@@ -18,6 +18,12 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Новая папка\sqlite3.c">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="datebase.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -26,5 +32,16 @@
     <ClInclude Include="MSS.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Новая папка\sqlite3.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <Filter>Файлы ресурсов</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tables.db3" />
   </ItemGroup>
 </Project>

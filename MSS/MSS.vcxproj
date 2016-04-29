@@ -134,9 +134,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Новая папка\sqlite3.c" />
+    <ClCompile Include="datebase.h" />
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\Новая папка\sqlite3.h" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -146,6 +149,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tables.db3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

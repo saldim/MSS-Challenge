@@ -1,5 +1,5 @@
 #pragma once
-#include <math.h> 
+#include <cmath> 
 
 namespace MSS {
 
@@ -87,7 +87,7 @@ namespace MSS {
 	  * Автор: Нигаматьянов Рафис
 	  */
 	bool IsSystematicError(double q, double *measures, int n) {
-		int sum = 0;
+		double sum = 0;
 		for (int i = 0; i < n - 1; i++) {
 			sum += pow(measures[i + 1] - measures[i], 2);
 		}

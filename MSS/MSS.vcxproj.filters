@@ -21,18 +21,12 @@
     <ClCompile Include="datebase.h">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="sqlite3.c">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
     <ClInclude Include="MSS.h">
-      <Filter>Файлы исходного кода</Filter>
-    </ClInclude>
-    <ClInclude Include="sqlite3.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
   </ItemGroup>
@@ -43,5 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="tables.db3" />
+    <None Include="System.Data.SQLite.dll" />
   </ItemGroup>
 </Project>

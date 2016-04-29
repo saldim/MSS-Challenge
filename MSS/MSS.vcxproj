@@ -136,14 +136,12 @@
   <ItemGroup>
     <ClCompile Include="datebase.h" />
     <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MSS.h" />
-    <ClInclude Include="sqlite3.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -151,6 +149,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="System.Data.SQLite.dll" />
     <None Include="tables.db3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

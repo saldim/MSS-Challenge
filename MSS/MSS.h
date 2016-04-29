@@ -41,3 +41,7 @@ double stdDeviation(double *measures, int n) {
 double MeanSquareError(double *measures, int n) {
 	return (stdDeviation(measures, n)/sqrt(n));
 }
+
+void Sort(double *measures, int n) {
+
+}

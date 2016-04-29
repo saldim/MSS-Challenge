@@ -75,3 +75,19 @@ bool isFailByRomanovsky(int i, double q, double *measures, int n) {
 	//TODO: Реализовать сравнение 
 	return 0;
 }
+
+/**
+  * Прототип функции для определения наличия систематической погрешности критерием Аббе
+  * Параметры:
+  * +double q - уровень значимости
+  * +double measures - массив измерений
+  * +int n - кол-во измерений
+  * Автор: Нигаматьянов Рафис
+  */ 
+bool IsSystematicError(double q, double *measures, int n) {
+	int sum = 0;
+	for (int i = 0; i < n - 1; i++) {
+		sum += (measures[i + 1] - measures[i]) * (measures[i + 1] - measures[i]);
+	}
+    return ((sum / (2 * (n - 1)))*(sum / (2 * (n - 1)))) / (stdDeviation(measures, n)*stdDeviation(measures, n));
+}

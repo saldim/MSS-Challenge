@@ -74,3 +74,18 @@ void Sort(double *measures, int n) {
 bool isFailByRomanovsky(int i, double q, double *measures, int n) {
 	abs(Average(measures, n) - measures[i]) / stdDeviation(measures, n);
 }
+/**
+* Прототип функции определяющий является ли промахом результат измерений
+* Параметры:
+* +double q - уровень значимости
+* +double measures - массив измерений
+* +int n - кол-во измерений
+* Автор: Нигаматьянов Рафис
+*/ 
+bool IsSystematicError(double q, double *measures, int n) {
+	int sum = 0;
+	for (int i = 0; i < n - 1; i++) {
+		sum += (measures[i + 1] - measures[i]) * (measures[i + 1] - measures[i]);
+	}
+    return ((sum / (2 * (n - 1)))*(sum / (2 * (n - 1)))) / (stdDeviation(measures, n)*stdDeviation(measures, n));
+}

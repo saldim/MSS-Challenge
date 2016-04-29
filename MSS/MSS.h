@@ -13,7 +13,7 @@ double Average(double *measures, int n) {
 	for (int i = 0; i < n; i++) {
 		sum += measures[i];
 	}
-	return (sum/n);
+	return sum/n;
 }
 
 /**
@@ -28,7 +28,7 @@ double stdDeviation(double *measures, int n) {
 	for (int i = 0; i < n; i++) {
 		sum += (measures[i] - Average(measures, n))*(measures[i] - Average(measures, n));
 	}
-	return (sqrt(sum / (n-1)));
+	return sqrt(sum / (n-1));
 }
 
 /**
@@ -39,21 +39,21 @@ double stdDeviation(double *measures, int n) {
  * Автор: Сидоркин Владислав
  */
 double MeanSquareError(double *measures, int n) {
-	return (stdDeviation(measures, n)/sqrt(n));
+	return stdDeviation(measures, n)/sqrt(n);
 }
 
 /**
-* Функция сортирующая по возрастанию массив результатов измерений
-* Параметры:
-* +double measures - массив измерений
-* +int n - кол-во измерений
-* Автор: Нигаматьянов Рафис
-*/
+ * Функция сортирующая по возрастанию массив результатов измерений
+ * Параметры:
+ * +double measures - массив измерений
+ * +int n - кол-во измерений
+ * Автор: Нигаматьянов Рафис
+ */
 void Sort(double *measures, int n) {
 	double temp;
 	for (int i = 0; i < n - 1; i++) {
 		for (int j = 0; j < n - i - 1; j++)
-			if (measures[j] > measures[j + 1]){
+			if (measures[j] > measures[j + 1]) {
                 temp = measures[j];
 				measures[j] = measures[j + 1];
 				measures[j + 1] = temp;
@@ -61,16 +61,17 @@ void Sort(double *measures, int n) {
 	}
 }
 
-
 /**
-* Прототип функции определяющий является ли промахом результат измерений
-* Параметры:
-* +int i - переменная
-* +double q - уровень значимости
-* +double measures - массив измерений
-* +int n - кол-во измерений
-* Автор: Нигаматьянов Рафис
-*/
+ * Прототип функции определяющий является ли i-ый результат измерения промахом 
+ * Параметры:
+ * +int i - переменная
+ * +double q - уровень значимости
+ * +double measures - массив измерений
+ * +int n - кол-во измерений
+ * Автор: Нигаматьянов Рафис
+ */
 bool isFailByRomanovsky(int i, double q, double *measures, int n) {
-	abs(Average(measures, n) - measures[i]) / stdDeviation(measures, n);
+	double beta = abs(Average(measures, n) - measures[i]) / stdDeviation(measures, n);
+	//TODO: Реализовать сравнение 
+	return 0;
 }

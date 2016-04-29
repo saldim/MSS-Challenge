@@ -87,7 +87,6 @@ namespace MSS {
 			this->label1->Size = System::Drawing::Size(111, 13);
 			this->label1->TabIndex = 2;
 			this->label1->Text = L"Внесите измерения:";
-			this->label1->Click += gcnew System::EventHandler(this, &MainForm::label1_Click);
 			// 
 			// button2
 			// 
@@ -126,27 +125,21 @@ namespace MSS {
 
 		}
 #pragma endregion
-	private:
-		void underconstructionbox()
-		{
-				String^ message = "Under construction";
-				String^ caption = "Информация";
-				//MessageBoxButtons buttons = MessageBoxButtons::YesNo;
-				System::Windows::Forms::DialogResult result;
-				//result = MessageBox::Show(this, message, caption, buttons);
-			    result = MessageBox::Show(this, message, caption);
-			}
-		
-	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
-	}
+	private: void underconstructionbox()
+	{
+		MessageBox::Show(this, "Under construction", "Информация");
+	}	
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		underconstructionbox();
 	}
+
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		underconstructionbox();
 	}
-private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-	underconstructionbox();
-}
+
+	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+		underconstructionbox();
+	}
 };
 }

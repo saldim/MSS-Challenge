@@ -60,3 +60,17 @@ void Sort(double *measures, int n) {
 			}
 	}
 }
+
+
+/**
+* Прототип функции определяющий является ли промахом результат измерений
+* Параметры:
+* +int i - переменная
+* +double q - уровень значимости
+* +double measures - массив измерений
+* +int n - кол-во измерений
+* Автор: Нигаматьянов Рафис
+*/
+bool isFailByRomanovsky(int i, double q, double *measures, int n) {
+	abs(Average(measures, n) - measures[i]) / stdDeviation(measures, n);
+}

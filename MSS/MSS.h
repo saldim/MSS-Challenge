@@ -6,5 +6,5 @@ double Average(double *measures, int n) {
 	for (int i = 0; i < n; i++); {
 		sum += measures[i];
 	}
-	cout << sum / n << endl;
+	return (sum/n);
 }

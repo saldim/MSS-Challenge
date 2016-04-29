@@ -34,6 +34,9 @@ namespace MSS {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::Button^  button1;
+	protected:
 
 	private:
 		/// <summary>
@@ -48,11 +51,38 @@ namespace MSS {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"MainForm";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->SuspendLayout();
+			// 
+			// listBox1
+			// 
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->Location = System::Drawing::Point(10, 6);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->Size = System::Drawing::Size(154, 199);
+			this->listBox1->TabIndex = 0;
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(10, 212);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(153, 29);
+			this->button1->TabIndex = 1;
+			this->button1->Text = L"button1";
+			this->button1->UseVisualStyleBackColor = true;
+			// 
+			// MainForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(284, 261);
+			this->Controls->Add(this->button1);
+			this->Controls->Add(this->listBox1);
+			this->Name = L"MainForm";
+			this->Text = L"MainForm";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};

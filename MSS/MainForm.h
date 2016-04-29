@@ -69,7 +69,7 @@ namespace MSS {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(153, 29);
 			this->button1->TabIndex = 1;
-			this->button1->Text = L"button1";
+			this->button1->Text = L"Расчитать";
 			this->button1->UseVisualStyleBackColor = true;
 			// 
 			// MainForm
@@ -80,7 +80,7 @@ namespace MSS {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->listBox1);
 			this->Name = L"MainForm";
-			this->Text = L"MainForm";
+			this->Text = L"MSS";
 			this->ResumeLayout(false);
 
 		}

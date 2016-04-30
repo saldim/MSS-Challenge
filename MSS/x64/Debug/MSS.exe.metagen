@@ -1,3 +1,4 @@
+  System.Data.SQLite.dll - Embedded, ContainedInManifestFile, 
   MSS.MainForm.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly MSS, Version=0.0.*, Culture=Инвариантный язык (Инвариантная страна): 
@@ -5,6 +6,8 @@ Assembly MSS, Version=0.0.*, Culture=Инвариантный язык (Инва
 Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
 Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Data.SQLite, Version=1.0.101.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139: 
 	hash=None, flags=None
 Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None

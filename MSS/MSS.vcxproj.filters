@@ -36,7 +36,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tables.db3" />
-    <None Include="System.Data.SQLite.dll" />
+    <_EmbedManagedResourceFile Include="System.Data.SQLite.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="tables.db3" />
   </ItemGroup>
 </Project>

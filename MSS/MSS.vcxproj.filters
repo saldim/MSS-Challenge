@@ -27,4 +27,18 @@
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <Filter>Файлы ресурсов</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <_EmbedManagedResourceFile Include="System.Data.SQLite.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SQLite.Interop.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="tables.db3" />
+  </ItemGroup>
 </Project>

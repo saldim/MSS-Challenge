@@ -2,6 +2,8 @@
 #include <cmath> 
 
 namespace MSS {
+	using namespace System::Data::SQLite;
+	using namespace System::Diagnostics;
 
 	/**
 	 * Фунция вычисляющая среднее арифметическое массива измерений
@@ -64,35 +66,48 @@ namespace MSS {
 	}
 
 	/**
-	 * Прототип функции определяющий является ли i-ый результат измерения промахом
+	 * Функция определяющая является ли i-ый результат измерения промахом критерием Романовского
 	 * Параметры:
-	 * +int i - переменная
-	 * +double q - уровень значимости
 	 * +double measures - массив измерений
+	 * +int i - переменная
 	 * +int n - кол-во измерений
-	 * Автор: Нигаматьянов Рафис
+	 * +System::String^ q - уровень значимости
+	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
 	 */
-	bool IsFailByRomanovsky(int i, double q, double *measures, int n) {
+	bool IsFailByRomanovsky(double *measures, int i, int n, System::String^ q) {
+		Sort(measures,n);
 		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
-		//TODO: Реализовать сравнение 
-		return 0;
+		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
+		connect->Open();
+		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Romanovsky WHERE n=" + n + " AND q=" + q + ";", connect);
+		SQLiteDataReader^ reader = cmd->ExecuteReader();
+		reader->Read();
+		double betaq = reader->GetDouble(0); //Пороговое значение критерия Романовского
+		connect->Close();
+		return beta > betaq;
 	}
 
 	/**
-	  * Прототип функции для определения наличия систематической погрешности критерием Аббе
-	  * Параметры:
-	  * +double q - уровень значимости
-	  * +double measures - массив измерений
-	  * +int n - кол-во измерений
-	  * Автор: Нигаматьянов Рафис
-	  */
-	bool IsSystematicError(double q, double *measures, int n) {
+	 * Функция для определения наличия систематической погрешности критерием Аббе
+	 * Параметры:
+	 * +double measures - массив измерений
+	 * +int n - кол-во измерений
+	 * +System::String^ q - уровень значимости
+	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
+	 */
+	bool IsSystematicError(double *measures, int n, System::String^ q) {
 		double sum = 0;
 		for (int i = 0; i < n - 1; i++) {
 			sum += pow(measures[i + 1] - measures[i], 2);
 		}
 		double V = (sum / (2 * (n - 1))) / pow(StdDeviation(measures, n), 2);
-		//TODO: Реализовать сравнение 
-		return 0;
+		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
+		connect->Open();
+		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Abbe WHERE n="+n+" AND q="+q+";", connect); 
+		SQLiteDataReader^ reader = cmd->ExecuteReader();
+		reader->Read();
+		double Vq = reader->GetDouble(0); //Пороговое значение критерия Аббе
+		connect->Close();
+		return V < Vq;
 	}
 }

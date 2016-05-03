@@ -18,9 +18,6 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="datebase.h">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -37,6 +34,9 @@
   </ItemGroup>
   <ItemGroup>
     <_EmbedManagedResourceFile Include="System.Data.SQLite.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SQLite.Interop.dll" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="tables.db3" />

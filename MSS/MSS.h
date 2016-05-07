@@ -75,7 +75,6 @@ namespace MSS {
 	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
 	 */
 	bool IsFailByRomanovsky(double *measures, int i, int n, System::String^ q) {
-		Sort(measures,n);
 		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
 		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
 		connect->Open();

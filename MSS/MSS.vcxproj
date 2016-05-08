@@ -36,7 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -50,7 +50,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -98,8 +98,8 @@
       </AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)SQLite.Interop.dll $(OutDir)SQLite.Interop.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,8 +116,8 @@
       </AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)SQLite.Interop.dll $(OutDir)SQLite.Interop.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,8 +131,8 @@
       </AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)SQLite.Interop.dll $(OutDir)SQLite.Interop.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,8 +146,8 @@
       </AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)SQLite.Interop.dll $(OutDir)SQLite.Interop.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,7 +162,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AboutForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -183,17 +182,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <_EmbedManagedResourceFile Include="System.Data.SQLite.dll">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    <None Include="System.Data.SQLite.dll">
       <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
-    </_EmbedManagedResourceFile>
+    </None>
     <Text Include="tables.db3">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

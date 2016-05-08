@@ -17,13 +17,10 @@ namespace MSS {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
-	//	Graphics^ draw;
 		MainForm(void)
 		{
 			InitializeComponent();
 			MeasureGV->Rows[0]->Cells[0]->Value = 1;
-//			bmp = gcnew Bitmap(CanvasPB->Width, CanvasPB->Height);
-//			draw = Graphics::FromImage(bmp);
 		}
 
 	protected:
@@ -37,29 +34,18 @@ namespace MSS {
 				delete components;
 			}
 		}
-	private: Bitmap^ bmp;
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::ComboBox^  MeanLevelCB;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  SysErrLabel;
-
-
 	private: System::Windows::Forms::Button^  SolveButton;
-
-
 	private: System::Windows::Forms::DataGridView^  MeasureGV;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
-
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  Chart;
-
-
-
-
-
-
 
 
 	protected:
@@ -79,6 +65,8 @@ namespace MSS {
 			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			System::Windows::Forms::DataVisualization::Charting::Title^  title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->MeanLevelCB = (gcnew System::Windows::Forms::ComboBox());
@@ -222,6 +210,7 @@ namespace MSS {
 			// Chart
 			// 
 			chartArea1->AxisX->Minimum = 1;
+			chartArea1->AxisY->LabelStyle->Format = L"0.00";
 			chartArea1->Name = L"Area";
 			this->Chart->ChartAreas->Add(chartArea1);
 			this->Chart->Location = System::Drawing::Point(188, 128);
@@ -231,7 +220,15 @@ namespace MSS {
 			series1->CustomProperties = L"IsXAxisQuantitative=False";
 			series1->Name = L"line";
 			series1->YValuesPerPoint = 2;
+			series2->ChartArea = L"Area";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Name = L"top";
+			series3->ChartArea = L"Area";
+			series3->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series3->Name = L"bottom";
 			this->Chart->Series->Add(series1);
+			this->Chart->Series->Add(series2);
+			this->Chart->Series->Add(series3);
 			this->Chart->Size = System::Drawing::Size(308, 238);
 			this->Chart->TabIndex = 15;
 			this->Chart->Text = L"Chart";
@@ -330,11 +327,25 @@ namespace MSS {
 				MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
 			}
 		}
-		//Рисуем график
+		//Чистим график
 		Chart->Series["line"]->Points->Clear();
-		//Chart->ChartAreas["Area"]->AxisY->Minimum = 1;
+		Chart->Series["top"]->Points->Clear();
+		Chart->Series["bottom"]->Points->Clear();
+		//Находим минимальные и максимальные значения
+		double min = Min(measures, n);
+		if (bottom < min) min = bottom;
+		double max = Max(measures, n);
+		if (top > max) max = top;
+		//Располагаем среднее арифметическое в центре графика
+		double distance = max - min;
+		if (distance == 0) distance = 1;
+		Chart->ChartAreas["Area"]->AxisY->Minimum = Average(measures, n) - distance;
+		Chart->ChartAreas["Area"]->AxisY->Maximum = Average(measures, n) + distance;
+		//Рисуем график
 		for (int i = 0; i < n; i++) {
+			Chart->Series["top"]->Points->Add(top);
 			Chart->Series["line"]->Points->Add(measures[i]);
+			Chart->Series["bottom"]->Points->Add(bottom);
 		}
 	}
 

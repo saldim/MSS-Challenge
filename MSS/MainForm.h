@@ -17,13 +17,13 @@ namespace MSS {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
-		Graphics^ draw;
+	//	Graphics^ draw;
 		MainForm(void)
 		{
 			InitializeComponent();
 			MeasureGV->Rows[0]->Cells[0]->Value = 1;
-			bmp = gcnew Bitmap(CanvasPB->Width, CanvasPB->Height);
-			draw = Graphics::FromImage(bmp);
+//			bmp = gcnew Bitmap(CanvasPB->Width, CanvasPB->Height);
+//			draw = Graphics::FromImage(bmp);
 		}
 
 	protected:
@@ -42,7 +42,7 @@ namespace MSS {
 	private: System::Windows::Forms::ComboBox^  MeanLevelCB;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  SysErrLabel;
-	private: System::Windows::Forms::PictureBox^  CanvasPB;
+
 
 	private: System::Windows::Forms::Button^  SolveButton;
 
@@ -50,9 +50,15 @@ namespace MSS {
 	private: System::Windows::Forms::DataGridView^  MeasureGV;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
-	private: System::Windows::Forms::Label^  label3;
+
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  Chart;
+
+
+
+
+
 
 
 
@@ -71,20 +77,22 @@ namespace MSS {
 		void InitializeComponent(void)
 		{
 			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^  title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->MeanLevelCB = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SysErrLabel = (gcnew System::Windows::Forms::Label());
-			this->CanvasPB = (gcnew System::Windows::Forms::PictureBox());
 			this->SolveButton = (gcnew System::Windows::Forms::Button());
 			this->MeasureGV = (gcnew System::Windows::Forms::DataGridView());
 			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->CanvasPB))->BeginInit();
+			this->Chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -100,7 +108,7 @@ namespace MSS {
 			// 
 			this->MeanLevelCB->FormattingEnabled = true;
 			this->MeanLevelCB->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"0.01", L"0.05" });
-			this->MeanLevelCB->Location = System::Drawing::Point(184, 36);
+			this->MeanLevelCB->Location = System::Drawing::Point(280, 25);
 			this->MeanLevelCB->Name = L"MeanLevelCB";
 			this->MeanLevelCB->Size = System::Drawing::Size(111, 21);
 			this->MeanLevelCB->TabIndex = 5;
@@ -109,7 +117,7 @@ namespace MSS {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(181, 20);
+			this->label2->Location = System::Drawing::Point(277, 9);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(123, 13);
 			this->label2->TabIndex = 6;
@@ -118,22 +126,13 @@ namespace MSS {
 			// SysErrLabel
 			// 
 			this->SysErrLabel->AutoSize = true;
-			this->SysErrLabel->Location = System::Drawing::Point(181, 60);
+			this->SysErrLabel->Location = System::Drawing::Point(254, 49);
 			this->SysErrLabel->Name = L"SysErrLabel";
 			this->SysErrLabel->Size = System::Drawing::Size(171, 39);
 			this->SysErrLabel->TabIndex = 7;
 			this->SysErrLabel->Text = L"*при данном уровне значимости\r\nв измерениях присутствует \r\nсистематическая погреш"
 				L"ность";
 			this->SysErrLabel->Visible = false;
-			// 
-			// CanvasPB
-			// 
-			this->CanvasPB->BackColor = System::Drawing::Color::White;
-			this->CanvasPB->Location = System::Drawing::Point(184, 125);
-			this->CanvasPB->Name = L"CanvasPB";
-			this->CanvasPB->Size = System::Drawing::Size(205, 204);
-			this->CanvasPB->TabIndex = 8;
-			this->CanvasPB->TabStop = false;
 			// 
 			// SolveButton
 			// 
@@ -200,15 +199,6 @@ namespace MSS {
 			this->Measure->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			this->Measure->Width = 120;
 			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(181, 109);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(48, 13);
-			this->label3->TabIndex = 11;
-			this->label3->Text = L"График:";
-			// 
 			// button1
 			// 
 			this->button1->Location = System::Drawing::Point(18, 321);
@@ -229,17 +219,36 @@ namespace MSS {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
 			// 
+			// Chart
+			// 
+			chartArea1->AxisX->Minimum = 1;
+			chartArea1->Name = L"Area";
+			this->Chart->ChartAreas->Add(chartArea1);
+			this->Chart->Location = System::Drawing::Point(188, 128);
+			this->Chart->Name = L"Chart";
+			series1->ChartArea = L"Area";
+			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series1->CustomProperties = L"IsXAxisQuantitative=False";
+			series1->Name = L"line";
+			series1->YValuesPerPoint = 2;
+			this->Chart->Series->Add(series1);
+			this->Chart->Size = System::Drawing::Size(308, 238);
+			this->Chart->TabIndex = 15;
+			this->Chart->Text = L"Chart";
+			title1->Name = L"Title1";
+			title1->Text = L"Измерения";
+			this->Chart->Titles->Add(title1);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(433, 395);
+			this->ClientSize = System::Drawing::Size(521, 406);
+			this->Controls->Add(this->Chart);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->label3);
 			this->Controls->Add(this->SolveButton);
 			this->Controls->Add(this->MeasureGV);
-			this->Controls->Add(this->CanvasPB);
 			this->Controls->Add(this->SysErrLabel);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->MeanLevelCB);
@@ -247,8 +256,8 @@ namespace MSS {
 			this->Name = L"MainForm";
 			this->Text = L"MSS";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->CanvasPB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -321,6 +330,12 @@ namespace MSS {
 				MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
 			}
 		}
+		//Рисуем график
+		Chart->Series["line"]->Points->Clear();
+		//Chart->ChartAreas["Area"]->AxisY->Minimum = 1;
+		for (int i = 0; i < n; i++) {
+			Chart->Series["line"]->Points->Add(measures[i]);
+		}
 	}
 
 	private: System::Void MeasureGV_RowsAdded(System::Object^  sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs^  e) {
@@ -344,17 +359,14 @@ namespace MSS {
 	}
 			 
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		//							x1 y1 x2 y2 
-		draw->DrawLine(Pens::Black, 20, 10, 20, 190);
-		draw->DrawLine(Pens::Black, 10, 180, 180, 180);
-		CanvasPB->Image = bmp;
+		
 	}
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	AboutForm^ form = gcnew AboutForm();
-	form->Show();
-}
-private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-	UnderConstructionBox();
-}
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		AboutForm^ form = gcnew AboutForm();
+		form->Show();
+	}
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		UnderConstructionBox();
+	}
 };
 }

@@ -2,10 +2,13 @@
 # Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
 ################################################################################
 
-/MSS/.vs/MSS/v14
+/MSS/.vs/
 /MSS/MSS.VC.VC.opendb
 /MSS/MSS.VC.db
 /MSS/MSS.opendb
 /MSS/MSS.opensdf
 /MSS/MSS.db
-
+/MSS/MSS.sdf
+/MSS/*.db3-journal
+/MSS/Debug/
+/MSS/x64/

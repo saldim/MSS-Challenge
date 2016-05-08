@@ -1,18 +1,5 @@
-﻿Сборка начата 04.05.2016 17:50:10.
-     1>Проект "C:\Users\ardes\Source\Repos\MSS-Challenge\MSS\MSS.vcxproj" в узле 2 (целевые объекты Build).
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.MetaGen.targets(91,5): warning : Required file "C:\USERS\слава\SOURCE\REPOS\MSS-CHALLENGE\MSS\SYSTEM.DATA.SQLITE.DLL" is missing.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /Od /D _DEBUG /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Users\ardes\Source\Repos\MSS-Challenge\MSS\System.Data.SQLite.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /errorReport:prompt /clr:nostdlib MainForm.cpp
-         MainForm.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /Zi /clr /nologo /W3 /WX- /Od /D _DEBUG /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fp"x64\Debug\MSS.pch" /Fa"x64\Debug\\" /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /errorReport:prompt "C:\Users\ardes\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cpp"
-         .NETFramework,Version=v4.0.AssemblyAttributes.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ardes\Source\Repos\MSS-Challenge\MSS\x64\Debug\MSS.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:System.Data.SQLite.dll /ASSEMBLYRESOURCE:SQLite.Interop.dll /ASSEMBLYRESOURCE:x64\Debug\MSS.MainForm.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"C:\Users\ardes\Source\Repos\MSS-Challenge\MSS\x64\Debug\MSS.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS,"5.02" /TLBID:1 /ENTRY:"Main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X64 x64\Debug\MainForm.obj
-         "x64\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.obj"
-         MainForm.obj : /DEBUG:FASTLINK не поддерживается, если присутствует управляемый код; выполняется перезапуск компоновки с /DEBUG:FULL
-         MSS.vcxproj -> C:\Users\ardes\Source\Repos\MSS-Challenge\MSS\x64\Debug\MSS.exe
-     1>Сборка проекта "C:\Users\ardes\Source\Repos\MSS-Challenge\MSS\MSS.vcxproj" завершена (целевые объекты Build).
-
-Сборка успешно завершена.
-
-Затраченное время: 00:00:12.37
+﻿  MainForm.cpp
+c:\users\saldi\source\repos\mss-challenge\mss\MainForm.h(272): warning C4101: e: неиспользованная локальная переменная
+  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
+  MainForm.obj : /DEBUG:FASTLINK не поддерживается, если присутствует управляемый код; выполняется перезапуск компоновки с /DEBUG:FULL
+LINK : fatal error LNK1181: эх єфрхЄё  юЄъЁ√Є№ тїюфэющ Їрщы "SQLite.Interop.dll"

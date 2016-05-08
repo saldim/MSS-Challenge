@@ -111,3 +111,36 @@ namespace MSS {
 		return V < Vq;
 	}
 }
+/**
+* Фунция для нахождения минимального элемента массива измерений.
+* Параметры:
+* +double measures - массив измерений
+* +int n - кол-во измерений
+* Автор: Сидоркин Владислав
+*/
+double Min(double *measures, int n) {
+	double min = measures[0];
+	for (int i = 1; i < n; i++) {
+		if (min < measures[i]) {
+			min = measures[i];
+		}
+	}
+	return min;
+}
+/**
+* Фунция для нахождения максимального элемента массива измерений.
+* Параметры:
+* +double measures - массив измерений
+* +int n - кол-во измерений
+* Автор: Нигаматьянов Рафис
+*/
+double Max(double *measures, int n) {
+	double max = measures[0];
+	for (int i = 1; i < n; i++) {
+		if (max > measures[i]) {
+			max = measures[i];
+		}
+	}
+	return max;
+}
+

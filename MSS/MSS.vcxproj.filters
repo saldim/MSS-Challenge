@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="dll">
+      <UniqueIdentifier>{493e2945-d5c2-4b37-95a8-4ffb96eb4993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dll\x64">
+      <UniqueIdentifier>{b0a0e4bb-b81d-4b61-b22c-39bd2587e64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dll\x86">
+      <UniqueIdentifier>{b971e5af-8109-49a5-89b8-8325c1be4b53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp">
@@ -42,12 +51,24 @@
     <Text Include="tables.db3" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SQLite.Interop.dll" />
-    <None Include="System.Data.SQLite.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="ramblogo.png">
       <Filter>Файлы исходного кода</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\SQLite.Interop.dll">
+      <Filter>dll\x64</Filter>
+    </None>
+    <None Include="x86\SQLite.Interop.dll">
+      <Filter>dll\x86</Filter>
+    </None>
+    <None Include="x86\System.Data.SQLite.dll">
+      <Filter>dll\x86</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <_EmbedManagedResourceFile Include="x64\System.Data.SQLite.dll">
+      <Filter>dll\x64</Filter>
+    </_EmbedManagedResourceFile>
   </ItemGroup>
 </Project>

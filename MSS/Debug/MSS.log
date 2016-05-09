@@ -1,7 +1,0 @@
-﻿  AboutForm.cpp
-  MainForm.cpp
-c:\users\saldi\source\repos\mss-challenge\mss\MainForm.h(299): warning C4101: e: неиспользованная локальная переменная
-  Создание кода...
-  AboutForm.obj : /DEBUG:FASTLINK не поддерживается, если присутствует управляемый код; выполняется перезапуск компоновки с /DEBUG:FULL
-  MSS.vcxproj -> C:\Users\saldi\Source\Repos\MSS-Challenge\MSS\Debug\MSS.exe
-  MSS.vcxproj -> C:\Users\saldi\Source\Repos\MSS-Challenge\MSS\Debug\MSS.pdb (Partial PDB)

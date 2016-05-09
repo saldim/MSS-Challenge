@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7F4F7FA4-7E2D-46AE-8489-30F15A36A4BC}</ProjectGuid>
-    <TargetFrameworkVersion>v3.0.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0.0</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>MSS</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -36,9 +36,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -50,9 +51,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -74,15 +76,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,8 +108,9 @@
       </AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)x86\SQLite.Interop.dll $(OutDir)SQLite.Interop.dll
+copy $(SolutionDir)x86\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,8 +127,9 @@
       </AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)x64\SQLite.Interop.dll $(OutDir)SQLite.Interop.dll
+copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,10 +141,13 @@
       <AdditionalDependencies />
       <AdditionalOptions>
       </AdditionalOptions>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)x86\SQLite.Interop.dll $(OutDir)SQLite.Interop.dll
+copy $(SolutionDir)x86\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,10 +159,13 @@
       <AdditionalDependencies />
       <AdditionalOptions>
       </AdditionalOptions>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(SolutionDir)tables.db3 $(OutDir)tables.db3
+copy $(SolutionDir)x64\SQLite.Interop.dll $(OutDir)SQLite.Interop.dll
+copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -158,10 +176,10 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AboutForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,17 +200,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <_EmbedManagedResourceFile Include="System.Data.SQLite.dll">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
-    </_EmbedManagedResourceFile>
     <Text Include="tables.db3">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -206,10 +213,17 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SQLite.Interop.dll" />
+    <Image Include="ramblogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ramblogo.png" />
+    <None Include="x64\SQLite.Interop.dll" />
+    <_EmbedManagedResourceFile Include="x64\System.Data.SQLite.dll">
+      <FileType>Document</FileType>
+    </_EmbedManagedResourceFile>
+    <None Include="x86\SQLite.Interop.dll" />
+    <None Include="x86\System.Data.SQLite.dll">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,13 +17,10 @@ namespace MSS {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
-		Graphics^ draw;
 		MainForm(void)
 		{
 			InitializeComponent();
 			MeasureGV->Rows[0]->Cells[0]->Value = 1;
-			bmp = gcnew Bitmap(CanvasPB->Width, CanvasPB->Height);
-			draw = Graphics::FromImage(bmp);
 		}
 
 	protected:
@@ -37,23 +34,29 @@ namespace MSS {
 				delete components;
 			}
 		}
-	private: Bitmap^ bmp;
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::ComboBox^  MeanLevelCB;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  SysErrLabel;
-	private: System::Windows::Forms::PictureBox^  CanvasPB;
-
 	private: System::Windows::Forms::Button^  SolveButton;
-
-
 	private: System::Windows::Forms::DataGridView^  MeasureGV;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
-	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
-
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  Chart;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
+	private: System::Windows::Forms::Label^  FailCountLabel;
+	private: System::Windows::Forms::Label^  CountLabel;
+	private: System::Windows::Forms::Label^  IntervalLabel;
+	private: System::Windows::Forms::Label^  AverageLabel;
+	private: System::Windows::Forms::Label^  label6;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Button^  ClearButton;
+	private: System::Windows::Forms::Button^  DeleteFailButton;
 
 
 	protected:
@@ -71,20 +74,36 @@ namespace MSS {
 		void InitializeComponent(void)
 		{
 			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^  title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->MeanLevelCB = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SysErrLabel = (gcnew System::Windows::Forms::Label());
-			this->CanvasPB = (gcnew System::Windows::Forms::PictureBox());
 			this->SolveButton = (gcnew System::Windows::Forms::Button());
 			this->MeasureGV = (gcnew System::Windows::Forms::DataGridView());
 			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->CanvasPB))->BeginInit();
+			this->Chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->FailCountLabel = (gcnew System::Windows::Forms::Label());
+			this->CountLabel = (gcnew System::Windows::Forms::Label());
+			this->IntervalLabel = (gcnew System::Windows::Forms::Label());
+			this->AverageLabel = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->ClearButton = (gcnew System::Windows::Forms::Button());
+			this->DeleteFailButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->BeginInit();
+			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -100,7 +119,7 @@ namespace MSS {
 			// 
 			this->MeanLevelCB->FormattingEnabled = true;
 			this->MeanLevelCB->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"0.01", L"0.05" });
-			this->MeanLevelCB->Location = System::Drawing::Point(184, 36);
+			this->MeanLevelCB->Location = System::Drawing::Point(322, 4);
 			this->MeanLevelCB->Name = L"MeanLevelCB";
 			this->MeanLevelCB->Size = System::Drawing::Size(111, 21);
 			this->MeanLevelCB->TabIndex = 5;
@@ -109,31 +128,22 @@ namespace MSS {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(181, 20);
+			this->label2->Location = System::Drawing::Point(193, 9);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(123, 13);
+			this->label2->Size = System::Drawing::Size(120, 13);
 			this->label2->TabIndex = 6;
-			this->label2->Text = L"Уровень значимости q";
+			this->label2->Text = L"Уровень значимости: ";
 			// 
 			// SysErrLabel
 			// 
 			this->SysErrLabel->AutoSize = true;
-			this->SysErrLabel->Location = System::Drawing::Point(181, 60);
+			this->SysErrLabel->Location = System::Drawing::Point(193, 26);
 			this->SysErrLabel->Name = L"SysErrLabel";
-			this->SysErrLabel->Size = System::Drawing::Size(171, 39);
+			this->SysErrLabel->Size = System::Drawing::Size(244, 26);
 			this->SysErrLabel->TabIndex = 7;
-			this->SysErrLabel->Text = L"*при данном уровне значимости\r\nв измерениях присутствует \r\nсистематическая погреш"
-				L"ность";
+			this->SysErrLabel->Text = L"*при данном уровне значимости в измерениях\r\n присутствует систематическая погрешн"
+				L"ость";
 			this->SysErrLabel->Visible = false;
-			// 
-			// CanvasPB
-			// 
-			this->CanvasPB->BackColor = System::Drawing::Color::White;
-			this->CanvasPB->Location = System::Drawing::Point(184, 125);
-			this->CanvasPB->Name = L"CanvasPB";
-			this->CanvasPB->Size = System::Drawing::Size(205, 204);
-			this->CanvasPB->TabIndex = 8;
-			this->CanvasPB->TabStop = false;
 			// 
 			// SolveButton
 			// 
@@ -200,15 +210,6 @@ namespace MSS {
 			this->Measure->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			this->Measure->Width = 120;
 			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(181, 109);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(48, 13);
-			this->label3->TabIndex = 11;
-			this->label3->Text = L"График:";
-			// 
 			// button1
 			// 
 			this->button1->Location = System::Drawing::Point(18, 321);
@@ -229,26 +230,170 @@ namespace MSS {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
 			// 
+			// Chart
+			// 
+			chartArea1->AxisX->Minimum = 1;
+			chartArea1->AxisY->LabelStyle->Format = L"0.00";
+			chartArea1->Name = L"Area";
+			this->Chart->ChartAreas->Add(chartArea1);
+			this->Chart->Location = System::Drawing::Point(195, 57);
+			this->Chart->Name = L"Chart";
+			series1->ChartArea = L"Area";
+			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series1->Color = System::Drawing::Color::Red;
+			series1->CustomProperties = L"IsXAxisQuantitative=False";
+			series1->Name = L"line";
+			series1->YValuesPerPoint = 2;
+			series2->BorderColor = System::Drawing::Color::Gray;
+			series2->BorderDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Dash;
+			series2->ChartArea = L"Area";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Color = System::Drawing::Color::Gray;
+			series2->Name = L"top";
+			series3->BorderColor = System::Drawing::Color::Gray;
+			series3->BorderDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Dash;
+			series3->ChartArea = L"Area";
+			series3->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series3->Color = System::Drawing::Color::Gray;
+			series3->Name = L"bottom";
+			this->Chart->Series->Add(series1);
+			this->Chart->Series->Add(series2);
+			this->Chart->Series->Add(series3);
+			this->Chart->Size = System::Drawing::Size(308, 193);
+			this->Chart->TabIndex = 15;
+			this->Chart->Text = L"Chart";
+			title1->Name = L"Title1";
+			title1->Text = L"Измерения";
+			this->Chart->Titles->Add(title1);
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->FailCountLabel);
+			this->groupBox1->Controls->Add(this->CountLabel);
+			this->groupBox1->Controls->Add(this->IntervalLabel);
+			this->groupBox1->Controls->Add(this->AverageLabel);
+			this->groupBox1->Controls->Add(this->label6);
+			this->groupBox1->Controls->Add(this->label5);
+			this->groupBox1->Controls->Add(this->label4);
+			this->groupBox1->Controls->Add(this->label3);
+			this->groupBox1->Location = System::Drawing::Point(196, 256);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(307, 92);
+			this->groupBox1->TabIndex = 16;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Информация";
+			// 
+			// FailCountLabel
+			// 
+			this->FailCountLabel->AutoSize = true;
+			this->FailCountLabel->Location = System::Drawing::Point(172, 72);
+			this->FailCountLabel->Name = L"FailCountLabel";
+			this->FailCountLabel->Size = System::Drawing::Size(0, 13);
+			this->FailCountLabel->TabIndex = 4;
+			// 
+			// CountLabel
+			// 
+			this->CountLabel->AutoSize = true;
+			this->CountLabel->Location = System::Drawing::Point(172, 55);
+			this->CountLabel->Name = L"CountLabel";
+			this->CountLabel->Size = System::Drawing::Size(0, 13);
+			this->CountLabel->TabIndex = 4;
+			// 
+			// IntervalLabel
+			// 
+			this->IntervalLabel->AutoSize = true;
+			this->IntervalLabel->Location = System::Drawing::Point(172, 36);
+			this->IntervalLabel->Name = L"IntervalLabel";
+			this->IntervalLabel->Size = System::Drawing::Size(0, 13);
+			this->IntervalLabel->TabIndex = 4;
+			// 
+			// AverageLabel
+			// 
+			this->AverageLabel->AutoSize = true;
+			this->AverageLabel->Location = System::Drawing::Point(172, 18);
+			this->AverageLabel->Name = L"AverageLabel";
+			this->AverageLabel->Size = System::Drawing::Size(0, 13);
+			this->AverageLabel->TabIndex = 4;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(10, 72);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(121, 13);
+			this->label6->TabIndex = 3;
+			this->label6->Text = L"Количество промахов:";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(10, 55);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(128, 13);
+			this->label5->TabIndex = 2;
+			this->label5->Text = L"Количество измерений:";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(9, 36);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(142, 13);
+			this->label4->TabIndex = 1;
+			this->label4->Text = L"Доверительный интервал:";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(10, 18);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(145, 13);
+			this->label3->TabIndex = 0;
+			this->label3->Text = L"Среднее арифметическое: ";
+			// 
+			// ClearButton
+			// 
+			this->ClearButton->Location = System::Drawing::Point(195, 354);
+			this->ClearButton->Name = L"ClearButton";
+			this->ClearButton->Size = System::Drawing::Size(148, 27);
+			this->ClearButton->TabIndex = 17;
+			this->ClearButton->Text = L"Очистить";
+			this->ClearButton->UseVisualStyleBackColor = true;
+			this->ClearButton->Click += gcnew System::EventHandler(this, &MainForm::ClearButton_Click);
+			// 
+			// DeleteFailButton
+			// 
+			this->DeleteFailButton->Location = System::Drawing::Point(355, 354);
+			this->DeleteFailButton->Name = L"DeleteFailButton";
+			this->DeleteFailButton->Size = System::Drawing::Size(148, 27);
+			this->DeleteFailButton->TabIndex = 18;
+			this->DeleteFailButton->Text = L"Удалить промахи";
+			this->DeleteFailButton->UseVisualStyleBackColor = true;
+			this->DeleteFailButton->Click += gcnew System::EventHandler(this, &MainForm::DeleteFailButton_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(433, 395);
+			this->ClientSize = System::Drawing::Size(521, 406);
+			this->Controls->Add(this->DeleteFailButton);
+			this->Controls->Add(this->ClearButton);
+			this->Controls->Add(this->groupBox1);
+			this->Controls->Add(this->Chart);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->label3);
 			this->Controls->Add(this->SolveButton);
 			this->Controls->Add(this->MeasureGV);
-			this->Controls->Add(this->CanvasPB);
 			this->Controls->Add(this->SysErrLabel);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->MeanLevelCB);
 			this->Controls->Add(this->label1);
 			this->Name = L"MainForm";
 			this->Text = L"MSS";
-			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->CanvasPB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->EndInit();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -256,18 +401,18 @@ namespace MSS {
 #pragma endregion
 	private: void UnderConstructionBox()
 	{
-		MessageBox::Show(this, "Функция будет доступна в следующих версиях приложения", "Информация");
+		MessageBox::Show(this, "Функция будет доступна в следующих версиях приложения", "Информация", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}	
 
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		System::Globalization::CultureInfo^ culture = gcnew System::Globalization::CultureInfo("en-Us", false);
 		int n = MeasureGV->RowCount-1;
 		if (n < 4) {
-			MessageBox::Show("Данные методы не применимы при количестве измерений меньше чем 4");
+			MessageBox::Show(this, "Данные методы не применимы при количестве измерений меньше чем 4", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 		if (n > 20) {
-			MessageBox::Show("Извените в следующей версии. Спасибо за понимание!");
+			MessageBox::Show(this,"Для данного количества измерений нет данных","Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 		double* measures = new double[n];
@@ -282,24 +427,23 @@ namespace MSS {
 		if (IsSystematicError(measures, n, MeanLevelCB->Text)) {
 			SysErrLabel->Visible = true;
 			System::Windows::Forms::DialogResult r;
-			r = MessageBox::Show(nullptr, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
+			r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
 			if (r == System::Windows::Forms::DialogResult::Cancel) return;
 		}
 		else {
 			SysErrLabel->Visible = false;
 		}
 		//Смотрим промахи критерием Романовского
-		for (int i = 0; i < n; i++) {
-			try {
+		try {
+			for (int i = 0; i < n; i++) {
 				if (IsFailByRomanovsky(measures, i, n, MeanLevelCB->Text)) {
 					MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Red;
 					MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
 				}
 			}
-			catch (Exception^ e) {
-				Debug::WriteLine("В таблице `Abbe` не найдено значение при `n` = "+n+" и `q` = "+MeanLevelCB->Text);
-				break;
-			}
+		}
+		catch (Exception^) {
+			Debug::WriteLine("В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text);
 		}
 		//Определяем граничные значения доверительного интервала
 		//TODO: Переписать это дерьмо
@@ -313,7 +457,6 @@ namespace MSS {
 		}
 		double bottom = Average(measures, n) - z*MeanSquareError(measures, n);
 		double top = Average(measures, n) + z*MeanSquareError(measures, n);
-		Debug::WriteLine("Доверительный интервал: (" + bottom + "," + top + ")");
 		//Смотрим промахи критерием Лапласа
 		for (int i = 0; i < n; i++) {
 			if (!(bottom <= measures[i] && measures[i] <= top)) {
@@ -321,6 +464,35 @@ namespace MSS {
 				MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
 			}
 		}
+		//Чистим график
+		Chart->Series["line"]->Points->Clear();
+		Chart->Series["top"]->Points->Clear();
+		Chart->Series["bottom"]->Points->Clear();
+		//Находим минимальные и максимальные значения
+		double min = Min(measures, n);
+		if (bottom < min) min = bottom;
+		double max = Max(measures, n);
+		if (top > max) max = top;
+		//Располагаем среднее арифметическое в центре графика
+		double distance = max - min;
+		if (distance == 0) distance = 1;
+		Chart->ChartAreas["Area"]->AxisY->Minimum = Average(measures, n) - distance;
+		Chart->ChartAreas["Area"]->AxisY->Maximum = Average(measures, n) + distance;
+		//Рисуем график
+		for (int i = 0; i < n; i++) {
+			Chart->Series["top"]->Points->Add(top);
+			Chart->Series["line"]->Points->Add(measures[i]);
+			Chart->Series["bottom"]->Points->Add(bottom);
+		}
+		//Выводим информацию
+		AverageLabel->Text = String::Format("{0:0.00}",Average(measures, n));
+		IntervalLabel->Text = String::Format("({0:0.00} ; {1:0.00})", bottom, top);
+		CountLabel->Text = n.ToString();
+		int fails = 0;
+		for (int i = 0; i < n; i++) {
+			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) fails++;
+		}
+		FailCountLabel->Text = fails.ToString();
 	}
 
 	private: System::Void MeasureGV_RowsAdded(System::Object^  sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs^  e) {
@@ -343,18 +515,47 @@ namespace MSS {
 		}
 	}
 			 
-	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		//							x1 y1 x2 y2 
-		draw->DrawLine(Pens::Black, 20, 10, 20, 190);
-		draw->DrawLine(Pens::Black, 10, 180, 180, 180);
-		CanvasPB->Image = bmp;
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		AboutForm^ form = gcnew AboutForm();
+		form->Show();
 	}
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	AboutForm^ form = gcnew AboutForm();
-	form->Show();
-}
-private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-	UnderConstructionBox();
-}
+
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		UnderConstructionBox();
+	}
+
+	private: System::Void ClearButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		MeasureGV->Rows->Clear();
+		MeasureGV->Rows[0]->Cells[0]->Value = 1;
+		AverageLabel->Text = "";
+		IntervalLabel->Text = "";
+		CountLabel->Text = "";
+		FailCountLabel->Text = "";
+		Chart->Series["line"]->Points->Clear();
+		Chart->Series["top"]->Points->Clear();
+		Chart->Series["bottom"]->Points->Clear();
+		SysErrLabel->Visible = false;
+	}
+
+	private: System::Void DeleteFailButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		int n = MeasureGV->RowCount;
+		for (int i = 0; i < n; i++) {
+			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) {
+				MeasureGV->Rows->RemoveAt(i);
+				n--;
+			}
+		}
+		for (int i = 0; i < n; i++) {
+			MeasureGV->Rows[i]->Cells[0]->Value = i + 1;
+		}
+		AverageLabel->Text = "";
+		IntervalLabel->Text = "";
+		CountLabel->Text = "";
+		FailCountLabel->Text = "";
+		Chart->Series["line"]->Points->Clear();
+		Chart->Series["top"]->Points->Clear();
+		Chart->Series["bottom"]->Points->Clear();
+		SysErrLabel->Visible = false;
+	}
 };
 }

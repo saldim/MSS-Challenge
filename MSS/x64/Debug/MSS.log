@@ -1,5 +1,0 @@
-﻿  MainForm.cpp
-c:\users\saldi\source\repos\mss-challenge\mss\MainForm.h(272): warning C4101: e: неиспользованная локальная переменная
-  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
-  MainForm.obj : /DEBUG:FASTLINK не поддерживается, если присутствует управляемый код; выполняется перезапуск компоновки с /DEBUG:FULL
-LINK : fatal error LNK1181: эх єфрхЄё  юЄъЁ√Є№ тїюфэющ Їрщы "SQLite.Interop.dll"

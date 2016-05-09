@@ -117,6 +117,7 @@ namespace MSS {
 			this->linkLabel1->TabIndex = 4;
 			this->linkLabel1->TabStop = true;
 			this->linkLabel1->Text = L"rambrera.com";
+			this->linkLabel1->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &AboutForm::linkLabel1_LinkClicked);
 			// 
 			// AboutForm
 			// 
@@ -150,6 +151,9 @@ namespace MSS {
 	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
 	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+	private: System::Void linkLabel1_LinkClicked(System::Object^  sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^  e) {
+		System::Diagnostics::Process::Start("http://rambrera.com/go/mss1/");
 	}
 };
 }

@@ -240,14 +240,21 @@ namespace MSS {
 			this->Chart->Name = L"Chart";
 			series1->ChartArea = L"Area";
 			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series1->Color = System::Drawing::Color::Red;
 			series1->CustomProperties = L"IsXAxisQuantitative=False";
 			series1->Name = L"line";
 			series1->YValuesPerPoint = 2;
+			series2->BorderColor = System::Drawing::Color::Gray;
+			series2->BorderDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Dash;
 			series2->ChartArea = L"Area";
 			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Color = System::Drawing::Color::Gray;
 			series2->Name = L"top";
+			series3->BorderColor = System::Drawing::Color::Gray;
+			series3->BorderDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Dash;
 			series3->ChartArea = L"Area";
 			series3->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series3->Color = System::Drawing::Color::Gray;
 			series3->Name = L"bottom";
 			this->Chart->Series->Add(series1);
 			this->Chart->Series->Add(series2);
@@ -394,18 +401,18 @@ namespace MSS {
 #pragma endregion
 	private: void UnderConstructionBox()
 	{
-		MessageBox::Show(this, "Функция будет доступна в следующих версиях приложения", "Информация");
+		MessageBox::Show(this, "Функция будет доступна в следующих версиях приложения", "Информация", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}	
 
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		System::Globalization::CultureInfo^ culture = gcnew System::Globalization::CultureInfo("en-Us", false);
 		int n = MeasureGV->RowCount-1;
 		if (n < 4) {
-			MessageBox::Show("Данные методы не применимы при количестве измерений меньше чем 4");
+			MessageBox::Show(this, "Данные методы не применимы при количестве измерений меньше чем 4", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 		if (n > 20) {
-			MessageBox::Show("Извените в следующей версии. Спасибо за понимание!");
+			MessageBox::Show(this,"Для данного количества измерений нет данных","Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 		double* measures = new double[n];
@@ -420,7 +427,7 @@ namespace MSS {
 		if (IsSystematicError(measures, n, MeanLevelCB->Text)) {
 			SysErrLabel->Visible = true;
 			System::Windows::Forms::DialogResult r;
-			r = MessageBox::Show(nullptr, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
+			r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
 			if (r == System::Windows::Forms::DialogResult::Cancel) return;
 		}
 		else {

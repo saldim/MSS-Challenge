@@ -375,7 +375,7 @@ namespace MSS {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(521, 406);
+			this->ClientSize = System::Drawing::Size(522, 406);
 			this->Controls->Add(this->DeleteFailButton);
 			this->Controls->Add(this->ClearButton);
 			this->Controls->Add(this->groupBox1);
@@ -413,7 +413,7 @@ namespace MSS {
 		}
 		if (n > 20) {
 			MessageBox::Show(this,"Для данного количества измерений нет данных","Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			return;
+			return; 
 		}
 		double* measures = new double[n];
 		for (int i = 0; i < n; i++) {
@@ -425,25 +425,32 @@ namespace MSS {
 		}
 		//Обнаруживаем систематическую погрешность
 		if (IsSystematicError(measures, n, MeanLevelCB->Text)) {
-			SysErrLabel->Visible = true;
+			SysErrLabel->Visible = true; 
 			System::Windows::Forms::DialogResult r;
 			r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
-			if (r == System::Windows::Forms::DialogResult::Cancel) return;
+			if (r == System::Windows::Forms::DialogResult::Cancel) return; //Утечка памяти! Нужно удалить динамические массивы
 		}
 		else {
 			SysErrLabel->Visible = false;
 		}
 		//Смотрим промахи критерием Романовского
+		int fails = 0;
+		double* _measures = new double[n]; //Новый массив измерений, без промахов
 		try {
 			for (int i = 0; i < n; i++) {
 				if (IsFailByRomanovsky(measures, i, n, MeanLevelCB->Text)) {
 					MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Red;
 					MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
+					fails++;
+				}
+				else {
+					_measures[i - fails] = measures[i];
 				}
 			}
 		}
 		catch (Exception^) {
-			Debug::WriteLine("В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text);
+			MessageBox::Show(this,"В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text, "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return; //Утечка памяти! Нужно удалить динамические массивы
 		}
 		//Определяем граничные значения доверительного интервала
 		//TODO: Переписать это дерьмо
@@ -455,15 +462,8 @@ namespace MSS {
 		if (P == 0.475) { //Q = 0.05
 			z = 1.95;
 		}
-		double bottom = Average(measures, n) - z*MeanSquareError(measures, n);
-		double top = Average(measures, n) + z*MeanSquareError(measures, n);
-		//Смотрим промахи критерием Лапласа
-		for (int i = 0; i < n; i++) {
-			if (!(bottom <= measures[i] && measures[i] <= top)) {
-				MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Red;
-				MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
-			}
-		}
+		double bottom = Average(_measures, n-fails) - z*MeanSquareError(_measures, n-fails);
+		double top = Average(_measures, n-fails) + z*MeanSquareError(_measures, n-fails);
 		//Чистим график
 		Chart->Series["line"]->Points->Clear();
 		Chart->Series["top"]->Points->Clear();
@@ -484,14 +484,9 @@ namespace MSS {
 			Chart->Series["line"]->Points->Add(measures[i]);
 			Chart->Series["bottom"]->Points->Add(bottom);
 		}
-		//Выводим информацию
-		AverageLabel->Text = String::Format("{0:0.00}",Average(measures, n));
+		AverageLabel->Text = String::Format("{0:0.00}",Average(_measures, n-fails));
 		IntervalLabel->Text = String::Format("({0:0.00} ; {1:0.00})", bottom, top);
 		CountLabel->Text = n.ToString();
-		int fails = 0;
-		for (int i = 0; i < n; i++) {
-			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) fails++;
-		}
 		FailCountLabel->Text = fails.ToString();
 	}
 

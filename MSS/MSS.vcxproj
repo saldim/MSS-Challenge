@@ -118,6 +118,7 @@ copy $(SolutionDir)x86\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FloatingPointModel>Precise</FloatingPointModel>
     </ClCompile>
     <Link>
       <AdditionalDependencies />

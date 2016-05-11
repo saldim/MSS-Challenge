@@ -6,6 +6,16 @@ namespace MSS {
 	using namespace System::Diagnostics;
 
 	/**
+	 * Фунция для округления числа до 4-го знака
+	 * Параметры:
+	 * +double a;
+	 * Автор: Сидоркин Владислав
+	 */
+	double Round(double a) {
+		return ceil(10000 * a) / 10000;
+	}
+
+	/**
 	 * Фунция вычисляющая среднее арифметическое массива измерений
 	 * Параметры:
 	 * +double *measures - массив измерений
@@ -32,7 +42,7 @@ namespace MSS {
 		for (int i = 0; i < n; i++) {
 			sum += pow(measures[i] - Average(measures, n), 2);
 		}
-		return sqrt(sum / (n - 1));
+		return sqrt(sum) / (n - 1);
 	}
 
 	/**

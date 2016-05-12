@@ -42,7 +42,7 @@ namespace MSS {
 		for (int i = 0; i < n; i++) {
 			sum += pow(measures[i] - Average(measures, n), 2);
 		}
-		return sqrt(sum) / (n - 1);
+		return sqrt(sum / (n - 1));
 	}
 
 	/**

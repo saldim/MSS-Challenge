@@ -10,7 +10,7 @@ namespace MSS {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Diagnostics;
-
+	using namespace System::Text::RegularExpressions;
 	/// <summary>
 	/// Сводка для MainForm
 	/// </summary>
@@ -259,7 +259,7 @@ namespace MSS {
 			this->Chart->Series->Add(series1);
 			this->Chart->Series->Add(series2);
 			this->Chart->Series->Add(series3);
-			this->Chart->Size = System::Drawing::Size(308, 193);
+			this->Chart->Size = System::Drawing::Size(363, 193);
 			this->Chart->TabIndex = 15;
 			this->Chart->Text = L"Chart";
 			title1->Name = L"Title1";
@@ -278,7 +278,7 @@ namespace MSS {
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Location = System::Drawing::Point(196, 256);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(307, 92);
+			this->groupBox1->Size = System::Drawing::Size(362, 92);
 			this->groupBox1->TabIndex = 16;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Информация";
@@ -286,7 +286,7 @@ namespace MSS {
 			// FailCountLabel
 			// 
 			this->FailCountLabel->AutoSize = true;
-			this->FailCountLabel->Location = System::Drawing::Point(172, 72);
+			this->FailCountLabel->Location = System::Drawing::Point(220, 72);
 			this->FailCountLabel->Name = L"FailCountLabel";
 			this->FailCountLabel->Size = System::Drawing::Size(0, 13);
 			this->FailCountLabel->TabIndex = 4;
@@ -294,7 +294,7 @@ namespace MSS {
 			// CountLabel
 			// 
 			this->CountLabel->AutoSize = true;
-			this->CountLabel->Location = System::Drawing::Point(172, 55);
+			this->CountLabel->Location = System::Drawing::Point(220, 55);
 			this->CountLabel->Name = L"CountLabel";
 			this->CountLabel->Size = System::Drawing::Size(0, 13);
 			this->CountLabel->TabIndex = 4;
@@ -302,7 +302,7 @@ namespace MSS {
 			// IntervalLabel
 			// 
 			this->IntervalLabel->AutoSize = true;
-			this->IntervalLabel->Location = System::Drawing::Point(172, 36);
+			this->IntervalLabel->Location = System::Drawing::Point(220, 39);
 			this->IntervalLabel->Name = L"IntervalLabel";
 			this->IntervalLabel->Size = System::Drawing::Size(0, 13);
 			this->IntervalLabel->TabIndex = 4;
@@ -310,7 +310,7 @@ namespace MSS {
 			// AverageLabel
 			// 
 			this->AverageLabel->AutoSize = true;
-			this->AverageLabel->Location = System::Drawing::Point(172, 18);
+			this->AverageLabel->Location = System::Drawing::Point(220, 18);
 			this->AverageLabel->Name = L"AverageLabel";
 			this->AverageLabel->Size = System::Drawing::Size(0, 13);
 			this->AverageLabel->TabIndex = 4;
@@ -338,9 +338,9 @@ namespace MSS {
 			this->label4->AutoSize = true;
 			this->label4->Location = System::Drawing::Point(9, 36);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(142, 13);
+			this->label4->Size = System::Drawing::Size(192, 13);
 			this->label4->TabIndex = 1;
-			this->label4->Text = L"Доверительный интервал:";
+			this->label4->Text = L"Доверительный интервал(Лапласа):";
 			// 
 			// label3
 			// 
@@ -355,7 +355,7 @@ namespace MSS {
 			// 
 			this->ClearButton->Location = System::Drawing::Point(195, 354);
 			this->ClearButton->Name = L"ClearButton";
-			this->ClearButton->Size = System::Drawing::Size(148, 27);
+			this->ClearButton->Size = System::Drawing::Size(179, 27);
 			this->ClearButton->TabIndex = 17;
 			this->ClearButton->Text = L"Очистить";
 			this->ClearButton->UseVisualStyleBackColor = true;
@@ -363,9 +363,9 @@ namespace MSS {
 			// 
 			// DeleteFailButton
 			// 
-			this->DeleteFailButton->Location = System::Drawing::Point(355, 354);
+			this->DeleteFailButton->Location = System::Drawing::Point(380, 354);
 			this->DeleteFailButton->Name = L"DeleteFailButton";
-			this->DeleteFailButton->Size = System::Drawing::Size(148, 27);
+			this->DeleteFailButton->Size = System::Drawing::Size(178, 27);
 			this->DeleteFailButton->TabIndex = 18;
 			this->DeleteFailButton->Text = L"Удалить промахи";
 			this->DeleteFailButton->UseVisualStyleBackColor = true;
@@ -375,7 +375,7 @@ namespace MSS {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(522, 406);
+			this->ClientSize = System::Drawing::Size(570, 406);
 			this->Controls->Add(this->DeleteFailButton);
 			this->Controls->Add(this->ClearButton);
 			this->Controls->Add(this->groupBox1);
@@ -407,12 +407,18 @@ namespace MSS {
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		System::Globalization::CultureInfo^ culture = gcnew System::Globalization::CultureInfo("en-Us", false);
 		int n = MeasureGV->RowCount-1;
+		for (int i = 0; i < n; i++) {
+			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) {
+				MessageBox::Show(this, "Резльтат измерения №"+(i+1)+" имеет неверный формат!","Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+		}
 		if (n < 4) {
-			MessageBox::Show(this, "Данные методы не применимы при количестве измерений меньше чем 4", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			MessageBox::Show(this, "Данные методы не применимы при количестве измерений меньше чем 4", "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 		if (n > 20) {
-			MessageBox::Show(this,"Для данного количества измерений нет данных","Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			MessageBox::Show(this,"Для данного количества измерений нет данных","Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return; 
 		}
 		double* measures = new double[n];
@@ -439,8 +445,8 @@ namespace MSS {
 		try {
 			for (int i = 0; i < n; i++) {
 				if (IsFailByRomanovsky(measures, i, n, MeanLevelCB->Text)) {
-					MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Red;
-					MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Red;
+					MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Orange;
+					MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Orange;
 					fails++;
 				}
 				else {
@@ -484,8 +490,8 @@ namespace MSS {
 			Chart->Series["line"]->Points->Add(measures[i]);
 			Chart->Series["bottom"]->Points->Add(bottom);
 		}
-		AverageLabel->Text = String::Format("{0:0.00}",Average(_measures, n-fails));
-		IntervalLabel->Text = String::Format("({0:0.00} ; {1:0.00})", bottom, top);
+		AverageLabel->Text = String::Format("{0:0.0000}",Average(_measures, n-fails));
+		IntervalLabel->Text = String::Format("({0:0.0000} ; {1:0.0000})", bottom, top);
 		CountLabel->Text = n.ToString();
 		FailCountLabel->Text = fails.ToString();
 	}
@@ -495,10 +501,22 @@ namespace MSS {
 	}
 
 	delegate void DeleteRowDelegate(int index);
+
 	private: System::Void MeasureGV_CellEndEdit(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 		if (MeasureGV->RowCount != 1 && MeasureGV->Rows[e->RowIndex]->Cells[1]->Value == nullptr) {
 			DeleteRowDelegate^ action = gcnew DeleteRowDelegate(this,&MainForm::DeleteRow);
 			this->BeginInvoke(action,e->RowIndex);
+		}
+		else {
+			Regex^ regex = gcnew Regex("^[0-9]+\\.?[0-9]*$");
+			if (!regex->IsMatch(MeasureGV->Rows[e->RowIndex]->Cells[1]->Value->ToString())) {
+				MeasureGV->Rows[e->RowIndex]->Cells[0]->Style->BackColor = Color::Red;
+				MeasureGV->Rows[e->RowIndex]->Cells[1]->Style->BackColor = Color::Red;
+			}
+			else {
+				MeasureGV->Rows[e->RowIndex]->Cells[0]->Style->BackColor = Color::White;
+				MeasureGV->Rows[e->RowIndex]->Cells[1]->Style->BackColor = Color::White;
+			}
 		}
 	}
 
@@ -535,7 +553,7 @@ namespace MSS {
 	private: System::Void DeleteFailButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		int n = MeasureGV->RowCount;
 		for (int i = 0; i < n; i++) {
-			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) {
+			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Orange) {
 				MeasureGV->Rows->RemoveAt(i);
 				n--;
 			}

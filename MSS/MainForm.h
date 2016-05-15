@@ -405,95 +405,99 @@ namespace MSS {
 	}	
 
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		System::Globalization::CultureInfo^ culture = gcnew System::Globalization::CultureInfo("en-Us", false);
-		int n = MeasureGV->RowCount-1;
-		for (int i = 0; i < n; i++) {
-			if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) {
-				MessageBox::Show(this, "Резльтат измерения №"+(i+1)+" имеет неверный формат!","Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-		}
-		if (n < 4) {
-			MessageBox::Show(this, "Данные методы не применимы при количестве измерений меньше чем 4", "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			return;
-		}
-		if (n > 20) {
-			MessageBox::Show(this,"Для данного количества измерений нет данных","Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			return; 
-		}
-		double* measures = new double[n];
-		for (int i = 0; i < n; i++) {
-			//Получаем измерения
-			measures[i] = System::Convert::ToDouble(MeasureGV->Rows[i]->Cells[1]->Value, culture);
-			//Заливаем белым цветом ячейки
-			MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::White;
-			MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::White;
-		}
-		//Обнаруживаем систематическую погрешность
-		if (IsSystematicError(measures, n, MeanLevelCB->Text)) {
-			SysErrLabel->Visible = true; 
-			System::Windows::Forms::DialogResult r;
-			r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
-			if (r == System::Windows::Forms::DialogResult::Cancel) return; //Утечка памяти! Нужно удалить динамические массивы
-		}
-		else {
-			SysErrLabel->Visible = false;
-		}
-		//Смотрим промахи критерием Романовского
-		int fails = 0;
-		double* _measures = new double[n]; //Новый массив измерений, без промахов
+		double* measures,*_measures;
 		try {
+			System::Globalization::CultureInfo^ culture = gcnew System::Globalization::CultureInfo("en-Us", false);
+			int n = MeasureGV->RowCount - 1;
 			for (int i = 0; i < n; i++) {
-				if (IsFailByRomanovsky(measures, i, n, MeanLevelCB->Text)) {
-					MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Orange;
-					MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Orange;
-					fails++;
-				}
-				else {
-					_measures[i - fails] = measures[i];
+				if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) {
+					throw gcnew FormatException("Резльтат измерения №" + (i + 1) + " имеет неверный формат!");
 				}
 			}
+			if (n < 4) throw gcnew NotSupportedException("Данные методы не применимы при количестве измерений меньше чем 4");
+			if (n > 20) throw gcnew NotSupportedException("Для данного количества измерений нет данных");
+			measures = new double[n];
+			for (int i = 0; i < n; i++) {
+				//Получаем измерения
+				measures[i] = System::Convert::ToDouble(MeasureGV->Rows[i]->Cells[1]->Value, culture);
+				//Заливаем белым цветом ячейки
+				MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::White;
+				MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::White;
+			}
+			//Обнаруживаем систематическую погрешность
+			if (IsSystematicError(measures, n, MeanLevelCB->Text)) {
+				SysErrLabel->Visible = true;
+				System::Windows::Forms::DialogResult r;
+				r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
+				if (r == System::Windows::Forms::DialogResult::Cancel) throw gcnew OperationCanceledException();
+			}
+			else {
+				SysErrLabel->Visible = false;
+			}
+			//Смотрим промахи критерием Романовского
+			int fails = 0;
+			_measures = new double[n]; //Новый массив измерений, без промахов
+			try {
+				for (int i = 0; i < n; i++) {
+					if (IsFailByRomanovsky(measures, i, n, MeanLevelCB->Text)) {
+						MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Orange;
+						MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Orange;
+						fails++;
+					}
+					else {
+						_measures[i - fails] = measures[i];
+					}
+				}
+			}
+			catch (Exception^) {
+				throw gcnew DataException("В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text);
+			}
+			//Определяем граничные значения доверительного интервала
+			//TODO: Переписать это дерьмо
+			double P = (1 - System::Convert::ToDouble(MeanLevelCB->Text, culture)) / 2;
+			double z;
+			if (P == 0.495) { //Q = 0.01
+				z = 2.6;
+			}
+			if (P == 0.475) { //Q = 0.05
+				z = 1.95;
+			}
+			//Вычисляем границы доверительного интервала
+			double bottom = Average(_measures, n - fails) - z*MeanSquareError(_measures, n - fails);
+			double top = Average(_measures, n - fails) + z*MeanSquareError(_measures, n - fails);
+			//Чистим график
+			Chart->Series["line"]->Points->Clear();
+			Chart->Series["top"]->Points->Clear();
+			Chart->Series["bottom"]->Points->Clear();
+			//Находим минимальные и максимальные значения
+			double min = Min(measures, n);
+			if (bottom < min) min = bottom;
+			double max = Max(measures, n);
+			if (top > max) max = top;
+			//Располагаем среднее арифметическое в центре графика
+			double distance = max - min;
+			if (distance == 0) distance = 1;
+			Chart->ChartAreas["Area"]->AxisY->Minimum = Average(measures, n) - distance;
+			Chart->ChartAreas["Area"]->AxisY->Maximum = Average(measures, n) + distance;
+			//Рисуем график
+			for (int i = 0; i < n; i++) {
+				Chart->Series["top"]->Points->Add(top);
+				Chart->Series["line"]->Points->Add(measures[i]);
+				Chart->Series["bottom"]->Points->Add(bottom);
+			}
+			AverageLabel->Text = String::Format("{0:0.0000}", Average(_measures, n - fails));
+			IntervalLabel->Text = String::Format("({0:0.0000} ; {1:0.0000})", bottom, top);
+			CountLabel->Text = n.ToString();
+			FailCountLabel->Text = fails.ToString();
 		}
-		catch (Exception^) {
-			MessageBox::Show(this,"В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text, "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			return; //Утечка памяти! Нужно удалить динамические массивы
+		catch (OperationCanceledException^) {}
+		catch (Exception^ e) {
+			MessageBox::Show(this, e->Message, "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		//Определяем граничные значения доверительного интервала
-		//TODO: Переписать это дерьмо
-		double P = (1 - System::Convert::ToDouble(MeanLevelCB->Text, culture)) / 2;
-		double z;
-		if (P == 0.495) { //Q = 0.01
-			z = 2.6;
+		finally{
+			delete[] measures;
+			delete[] _measures;
 		}
-		if (P == 0.475) { //Q = 0.05
-			z = 1.95;
-		}
-		double bottom = Average(_measures, n-fails) - z*MeanSquareError(_measures, n-fails);
-		double top = Average(_measures, n-fails) + z*MeanSquareError(_measures, n-fails);
-		//Чистим график
-		Chart->Series["line"]->Points->Clear();
-		Chart->Series["top"]->Points->Clear();
-		Chart->Series["bottom"]->Points->Clear();
-		//Находим минимальные и максимальные значения
-		double min = Min(measures, n);
-		if (bottom < min) min = bottom;
-		double max = Max(measures, n);
-		if (top > max) max = top;
-		//Располагаем среднее арифметическое в центре графика
-		double distance = max - min;
-		if (distance == 0) distance = 1;
-		Chart->ChartAreas["Area"]->AxisY->Minimum = Average(measures, n) - distance;
-		Chart->ChartAreas["Area"]->AxisY->Maximum = Average(measures, n) + distance;
-		//Рисуем график
-		for (int i = 0; i < n; i++) {
-			Chart->Series["top"]->Points->Add(top);
-			Chart->Series["line"]->Points->Add(measures[i]);
-			Chart->Series["bottom"]->Points->Add(bottom);
-		}
-		AverageLabel->Text = String::Format("{0:0.0000}",Average(_measures, n-fails));
-		IntervalLabel->Text = String::Format("({0:0.0000} ; {1:0.0000})", bottom, top);
-		CountLabel->Text = n.ToString();
-		FailCountLabel->Text = fails.ToString();
 	}
 
 	private: System::Void MeasureGV_RowsAdded(System::Object^  sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs^  e) {

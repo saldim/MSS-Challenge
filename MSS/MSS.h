@@ -2,6 +2,7 @@
 #include <cmath> 
 
 namespace MSS {
+	using namespace System;
 	using namespace System::Data::SQLite;
 	using namespace System::Diagnostics;
 
@@ -81,10 +82,10 @@ namespace MSS {
 	 * +double *measures - массив измерений
 	 * +int i - переменная
 	 * +int n - кол-во измерений
-	 * +System::String^ q - уровень значимости
+	 * +String^ q - уровень значимости
 	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
 	 */
-	bool IsFailByRomanovsky(double *measures, int i, int n, System::String^ q) {
+	bool IsFailByRomanovsky(double *measures, int i, int n, String^ q) {
 		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
 		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
 		connect->Open();
@@ -94,30 +95,6 @@ namespace MSS {
 		double betaq = reader->GetDouble(0); //Пороговое значение критерия Романовского
 		connect->Close();
 		return beta > betaq;
-	}
-
-	/**
-	 * Функция для определения наличия систематической погрешности критерием Аббе
-	 * Параметры:
-	 * +double *measures - массив измерений
-	 * +int n - кол-во измерений
-	 * +System::String^ q - уровень значимости
-	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
-	 */
-	bool IsSystematicError(double *measures, int n, System::String^ q) {
-		double sum = 0;
-		for (int i = 0; i < n - 1; i++) {
-			sum += pow(measures[i + 1] - measures[i], 2);
-		}
-		double V = (sum / (2 * (n - 1))) / pow(StdDeviation(measures, n), 2);
-		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
-		connect->Open();
-		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Abbe WHERE n="+n+" AND q="+q+";", connect); 
-		SQLiteDataReader^ reader = cmd->ExecuteReader();
-		reader->Read();
-		double Vq = reader->GetDouble(0); //Пороговое значение критерия Аббе
-		connect->Close();
-		return V < Vq;
 	}
 
 	/**
@@ -153,19 +130,39 @@ namespace MSS {
 		}
 		return max;
 	}
-}
-/**
- * Фунция для нахождения значений Аббе
- * Параметры:
- * +String q - уровень вероятности
- * +int n - кол-во измерений
- * Автор: Сидоркин Владислав
-*/
-double GetAbbe(System::String^ q, int n) {
-	if (q == "0.01") {
-		return (0.786460084 - (7.06909515 / n) + (41.85569806 / pow(n, 2)) - (146.757431 / pow(n, 3)) + (247.8015024 / pow(n, 4)));
+
+	/**
+	 * Фунция для нахождения значений Аббе
+	 * Параметры:
+	 * +System::String^ q - уровень значимости
+	 * +int n - кол-во измерений
+	 * Автор: Сидоркин Владислав
+	 */
+	double GetAbbe(String^ q, int n) {
+		if (q == "0.01") {
+			return (0.786460084 - (7.06909515 / n) + (41.85569806 / pow(n, 2)) - (146.757431 / pow(n, 3)) + (247.8015024 / pow(n, 4)));
+		}
+		if (q == "0.05") {
+			return (0.867561498 - (5.94495279 / n) + (37.40106356 / pow(n, 2)) - (137.710475 / pow(n, 3)) + (210.6458956 / pow(n, 4)));
+		}
+		throw gcnew ArgumentException("Неверное значение уровня значимости","q");
 	}
-	if (q == "0.05") {
-		return (0.867561498 - (5.94495279 / n) + (37.40106356 / pow(n, 2)) - (137.710475 / pow(n, 3)) + (210.6458956 / pow(n, 4)));
+
+	/**
+	 * Функция для определения наличия систематической погрешности критерием Аббе
+	 * Параметры:
+	 * +double *measures - массив измерений
+	 * +int n - кол-во измерений
+	 * +System::String^ q - уровень значимости
+	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав
+	 */
+	bool IsSystematicError(double *measures, int n, String^ q) {
+		double sum = 0;
+		for (int i = 0; i < n - 1; i++) {
+			sum += pow(measures[i + 1] - measures[i], 2);
+		}
+		double V = (sum / (2 * (n - 1))) / pow(StdDeviation(measures, n), 2);
+		double Vq = GetAbbe(q,n);
+		return V < Vq;
 	}
 }

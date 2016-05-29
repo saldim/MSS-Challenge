@@ -5,6 +5,7 @@ namespace MSS {
 	using namespace System;
 	using namespace System::Data::SQLite;
 	using namespace System::Diagnostics;
+	
 
 	/**
 	 * Фунция для округления числа до 4-го знака
@@ -82,14 +83,16 @@ namespace MSS {
 	 * +double *measures - массив измерений
 	 * +int i - переменная
 	 * +int n - кол-во измерений
-	 * +String^ q - уровень значимости
+	 * +double q - уровень значимости
 	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
 	 */
-	bool IsFailByRomanovsky(double *measures, int i, int n, String^ q) {
+	bool IsFailByRomanovsky(double *measures, double q, int i, int n) {
 		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
 		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
 		connect->Open();
-		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Romanovsky WHERE n=" + n + " AND q=" + q + ";", connect);
+		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Romanovsky WHERE n=" + n + " AND q=" + q.ToString(gcnew System::Globalization::CultureInfo("en",false)) + ";", connect);
+		Debug::WriteLine("SQL Query:");
+		Debug::WriteLine(cmd->CommandText);
 		SQLiteDataReader^ reader = cmd->ExecuteReader();
 		reader->Read();
 		double betaq = reader->GetDouble(0); //Пороговое значение критерия Романовского
@@ -138,11 +141,11 @@ namespace MSS {
 	 * +int n - кол-во измерений
 	 * Автор: Сидоркин Владислав
 	 */
-	double GetAbbe(String^ q, int n) {
-		if (q == "0.01") {
+	double GetAbbe(double q, int n) {
+		if (q == 0.01) {
 			return (0.786460084 - (7.06909515 / n) + (41.85569806 / pow(n, 2)) - (146.757431 / pow(n, 3)) + (247.8015024 / pow(n, 4)));
 		}
-		if (q == "0.05") {
+		if (q == 0.05) {
 			return (0.867561498 - (5.94495279 / n) + (37.40106356 / pow(n, 2)) - (137.710475 / pow(n, 3)) + (210.6458956 / pow(n, 4)));
 		}
 		throw gcnew ArgumentException("Неверное значение уровня значимости","q");
@@ -156,7 +159,7 @@ namespace MSS {
 	 * +System::String^ q - уровень значимости
 	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав
 	 */
-	bool IsSystematicError(double *measures, int n, String^ q) {
+	bool IsSystematicError(double *measures, double q, int n) {
 		double sum = 0;
 		for (int i = 0; i < n - 1; i++) {
 			sum += pow(measures[i + 1] - measures[i], 2);

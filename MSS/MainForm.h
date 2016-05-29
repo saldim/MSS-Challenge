@@ -45,7 +45,8 @@ namespace MSS {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::DataVisualization::Charting::Chart^  Chart;
+	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
+	private: System::Windows::Forms::Button^  ClearButton;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::Label^  FailCountLabel;
 	private: System::Windows::Forms::Label^  CountLabel;
@@ -55,8 +56,24 @@ namespace MSS {
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::Button^  ClearButton;
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  Chart;
 	private: System::Windows::Forms::Button^  DeleteFailButton;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	protected:
@@ -89,7 +106,10 @@ namespace MSS {
 			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->ClearButton = (gcnew System::Windows::Forms::Button());
 			this->Chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->DeleteFailButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->FailCountLabel = (gcnew System::Windows::Forms::Label());
 			this->CountLabel = (gcnew System::Windows::Forms::Label());
@@ -99,9 +119,8 @@ namespace MSS {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->ClearButton = (gcnew System::Windows::Forms::Button());
-			this->DeleteFailButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->BeginInit();
+			this->tableLayoutPanel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->BeginInit();
 			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
@@ -118,17 +137,17 @@ namespace MSS {
 			// MeanLevelCB
 			// 
 			this->MeanLevelCB->FormattingEnabled = true;
-			this->MeanLevelCB->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"0.01", L"0.05" });
-			this->MeanLevelCB->Location = System::Drawing::Point(322, 4);
+			this->MeanLevelCB->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"0,01", L"0,05" });
+			this->MeanLevelCB->Location = System::Drawing::Point(307, 4);
 			this->MeanLevelCB->Name = L"MeanLevelCB";
 			this->MeanLevelCB->Size = System::Drawing::Size(111, 21);
 			this->MeanLevelCB->TabIndex = 5;
-			this->MeanLevelCB->Text = L"0.01";
+			this->MeanLevelCB->Text = L"0,01";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(193, 9);
+			this->label2->Location = System::Drawing::Point(178, 9);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(120, 13);
 			this->label2->TabIndex = 6;
@@ -137,7 +156,7 @@ namespace MSS {
 			// SysErrLabel
 			// 
 			this->SysErrLabel->AutoSize = true;
-			this->SysErrLabel->Location = System::Drawing::Point(193, 26);
+			this->SysErrLabel->Location = System::Drawing::Point(178, 26);
 			this->SysErrLabel->Name = L"SysErrLabel";
 			this->SysErrLabel->Size = System::Drawing::Size(244, 26);
 			this->SysErrLabel->TabIndex = 7;
@@ -147,7 +166,8 @@ namespace MSS {
 			// 
 			// SolveButton
 			// 
-			this->SolveButton->Location = System::Drawing::Point(18, 288);
+			this->SolveButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->SolveButton->Location = System::Drawing::Point(12, 323);
 			this->SolveButton->Name = L"SolveButton";
 			this->SolveButton->Size = System::Drawing::Size(147, 27);
 			this->SolveButton->TabIndex = 10;
@@ -159,6 +179,8 @@ namespace MSS {
 			// 
 			this->MeasureGV->AllowUserToResizeColumns = false;
 			this->MeasureGV->AllowUserToResizeRows = false;
+			this->MeasureGV->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left));
 			this->MeasureGV->BackgroundColor = System::Drawing::Color::White;
 			this->MeasureGV->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->MeasureGV->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::Raised;
@@ -166,7 +188,7 @@ namespace MSS {
 			this->MeasureGV->ColumnHeadersVisible = false;
 			this->MeasureGV->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Id, this->Measure });
 			this->MeasureGV->ImeMode = System::Windows::Forms::ImeMode::NoControl;
-			this->MeasureGV->Location = System::Drawing::Point(18, 23);
+			this->MeasureGV->Location = System::Drawing::Point(12, 23);
 			this->MeasureGV->MultiSelect = false;
 			this->MeasureGV->Name = L"MeasureGV";
 			this->MeasureGV->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
@@ -186,7 +208,7 @@ namespace MSS {
 			this->MeasureGV->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::CellSelect;
 			this->MeasureGV->ShowEditingIcon = false;
 			this->MeasureGV->ShowRowErrors = false;
-			this->MeasureGV->Size = System::Drawing::Size(147, 259);
+			this->MeasureGV->Size = System::Drawing::Size(147, 294);
 			this->MeasureGV->TabIndex = 9;
 			this->MeasureGV->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainForm::MeasureGV_CellEndEdit);
 			this->MeasureGV->RowsAdded += gcnew System::Windows::Forms::DataGridViewRowsAddedEventHandler(this, &MainForm::MeasureGV_RowsAdded);
@@ -212,7 +234,8 @@ namespace MSS {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(18, 321);
+			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->button1->Location = System::Drawing::Point(12, 356);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(147, 27);
 			this->button1->TabIndex = 12;
@@ -222,7 +245,8 @@ namespace MSS {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(18, 354);
+			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->button2->Location = System::Drawing::Point(12, 389);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(147, 27);
 			this->button2->TabIndex = 13;
@@ -230,13 +254,51 @@ namespace MSS {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
 			// 
+			// tableLayoutPanel1
+			// 
+			this->tableLayoutPanel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->tableLayoutPanel1->ColumnCount = 2;
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				50)));
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				50)));
+			this->tableLayoutPanel1->Controls->Add(this->ClearButton, 0, 2);
+			this->tableLayoutPanel1->Controls->Add(this->Chart, 0, 0);
+			this->tableLayoutPanel1->Controls->Add(this->DeleteFailButton, 1, 2);
+			this->tableLayoutPanel1->Controls->Add(this->groupBox1, 0, 1);
+			this->tableLayoutPanel1->Location = System::Drawing::Point(178, 55);
+			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
+			this->tableLayoutPanel1->RowCount = 3;
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 63.29966F)));
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 36.70034F)));
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 30)));
+			this->tableLayoutPanel1->Size = System::Drawing::Size(478, 361);
+			this->tableLayoutPanel1->TabIndex = 24;
+			// 
+			// ClearButton
+			// 
+			this->ClearButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->ClearButton->Location = System::Drawing::Point(3, 333);
+			this->ClearButton->Name = L"ClearButton";
+			this->ClearButton->Size = System::Drawing::Size(233, 25);
+			this->ClearButton->TabIndex = 24;
+			this->ClearButton->Text = L"Очистить";
+			this->ClearButton->UseVisualStyleBackColor = true;
+			// 
 			// Chart
 			// 
+			this->Chart->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			chartArea1->AxisX->Minimum = 1;
 			chartArea1->AxisY->LabelStyle->Format = L"0.00";
 			chartArea1->Name = L"Area";
 			this->Chart->ChartAreas->Add(chartArea1);
-			this->Chart->Location = System::Drawing::Point(195, 57);
+			this->tableLayoutPanel1->SetColumnSpan(this->Chart, 2);
+			this->Chart->Location = System::Drawing::Point(3, 3);
 			this->Chart->Name = L"Chart";
 			series1->ChartArea = L"Area";
 			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
@@ -259,15 +321,30 @@ namespace MSS {
 			this->Chart->Series->Add(series1);
 			this->Chart->Series->Add(series2);
 			this->Chart->Series->Add(series3);
-			this->Chart->Size = System::Drawing::Size(363, 193);
-			this->Chart->TabIndex = 15;
+			this->Chart->Size = System::Drawing::Size(472, 203);
+			this->Chart->TabIndex = 18;
 			this->Chart->Text = L"Chart";
 			title1->Name = L"Title1";
 			title1->Text = L"Измерения";
 			this->Chart->Titles->Add(title1);
 			// 
+			// DeleteFailButton
+			// 
+			this->DeleteFailButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->DeleteFailButton->Location = System::Drawing::Point(242, 333);
+			this->DeleteFailButton->Name = L"DeleteFailButton";
+			this->DeleteFailButton->Size = System::Drawing::Size(233, 25);
+			this->DeleteFailButton->TabIndex = 25;
+			this->DeleteFailButton->Text = L"Удалить промахи";
+			this->DeleteFailButton->UseVisualStyleBackColor = true;
+			// 
 			// groupBox1
 			// 
+			this->groupBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->tableLayoutPanel1->SetColumnSpan(this->groupBox1, 2);
 			this->groupBox1->Controls->Add(this->FailCountLabel);
 			this->groupBox1->Controls->Add(this->CountLabel);
 			this->groupBox1->Controls->Add(this->IntervalLabel);
@@ -276,10 +353,10 @@ namespace MSS {
 			this->groupBox1->Controls->Add(this->label5);
 			this->groupBox1->Controls->Add(this->label4);
 			this->groupBox1->Controls->Add(this->label3);
-			this->groupBox1->Location = System::Drawing::Point(196, 256);
+			this->groupBox1->Location = System::Drawing::Point(3, 212);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(362, 92);
-			this->groupBox1->TabIndex = 16;
+			this->groupBox1->Size = System::Drawing::Size(472, 115);
+			this->groupBox1->TabIndex = 17;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Информация";
 			// 
@@ -351,35 +428,12 @@ namespace MSS {
 			this->label3->TabIndex = 0;
 			this->label3->Text = L"Среднее арифметическое: ";
 			// 
-			// ClearButton
-			// 
-			this->ClearButton->Location = System::Drawing::Point(195, 354);
-			this->ClearButton->Name = L"ClearButton";
-			this->ClearButton->Size = System::Drawing::Size(179, 27);
-			this->ClearButton->TabIndex = 17;
-			this->ClearButton->Text = L"Очистить";
-			this->ClearButton->UseVisualStyleBackColor = true;
-			this->ClearButton->Click += gcnew System::EventHandler(this, &MainForm::ClearButton_Click);
-			// 
-			// DeleteFailButton
-			// 
-			this->DeleteFailButton->Location = System::Drawing::Point(380, 354);
-			this->DeleteFailButton->Name = L"DeleteFailButton";
-			this->DeleteFailButton->Size = System::Drawing::Size(178, 27);
-			this->DeleteFailButton->TabIndex = 18;
-			this->DeleteFailButton->Text = L"Удалить промахи";
-			this->DeleteFailButton->UseVisualStyleBackColor = true;
-			this->DeleteFailButton->Click += gcnew System::EventHandler(this, &MainForm::DeleteFailButton_Click);
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(570, 406);
-			this->Controls->Add(this->DeleteFailButton);
-			this->Controls->Add(this->ClearButton);
-			this->Controls->Add(this->groupBox1);
-			this->Controls->Add(this->Chart);
+			this->ClientSize = System::Drawing::Size(668, 424);
+			this->Controls->Add(this->tableLayoutPanel1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->SolveButton);
@@ -391,6 +445,7 @@ namespace MSS {
 			this->Name = L"MainForm";
 			this->Text = L"MSS";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->EndInit();
+			this->tableLayoutPanel1->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->EndInit();
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
@@ -405,10 +460,11 @@ namespace MSS {
 	}	
 
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		double* measures,*_measures;
+		double *measures, *_measures, q;
 		try {
-			System::Globalization::CultureInfo^ culture = gcnew System::Globalization::CultureInfo("en-Us", false);
+			System::Globalization::CultureInfo ^culture = gcnew System::Globalization::CultureInfo("ru", false);
 			int n = MeasureGV->RowCount - 1;
+			q = System::Convert::ToDouble(MeanLevelCB->Text, culture);
 			for (int i = 0; i < n; i++) {
 				if (MeasureGV->Rows[i]->Cells[0]->Style->BackColor == Color::Red) {
 					throw gcnew FormatException("Резльтат измерения №" + (i + 1) + " имеет неверный формат!");
@@ -425,7 +481,7 @@ namespace MSS {
 				MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::White;
 			}
 			//Обнаруживаем систематическую погрешность
-			if (IsSystematicError(measures, n, MeanLevelCB->Text)) {
+			if (IsSystematicError(measures, q, n)) {
 				SysErrLabel->Visible = true;
 				System::Windows::Forms::DialogResult r;
 				r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
@@ -439,7 +495,7 @@ namespace MSS {
 			_measures = new double[n]; //Новый массив измерений, без промахов
 			try {
 				for (int i = 0; i < n; i++) {
-					if (IsFailByRomanovsky(measures, i, n, MeanLevelCB->Text)) {
+					if (IsFailByRomanovsky(measures, q , i, n)){
 						MeasureGV->Rows[i]->Cells[0]->Style->BackColor = Color::Orange;
 						MeasureGV->Rows[i]->Cells[1]->Style->BackColor = Color::Orange;
 						fails++;
@@ -450,11 +506,11 @@ namespace MSS {
 				}
 			}
 			catch (Exception^) {
-				throw gcnew DataException("В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text);
+				throw gcnew DataException("В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text->ToString(gcnew System::Globalization::CultureInfo("en",false)));
 			}
 			//Определяем граничные значения доверительного интервала
 			//TODO: Переписать это дерьмо
-			double P = (1 - System::Convert::ToDouble(MeanLevelCB->Text, culture)) / 2;
+			double P = (1 - q) / 2;
 			double z;
 			if (P == 0.495) { //Q = 0.01
 				z = 2.6;
@@ -512,7 +568,7 @@ namespace MSS {
 			this->BeginInvoke(action,e->RowIndex);
 		}
 		else {
-			Regex^ regex = gcnew Regex("^[0-9]+\\.?[0-9]*$");
+			Regex^ regex = gcnew Regex("^[0-9]+\\,?[0-9]*$");
 			if (!regex->IsMatch(MeasureGV->Rows[e->RowIndex]->Cells[1]->Value->ToString())) {
 				MeasureGV->Rows[e->RowIndex]->Cells[0]->Style->BackColor = Color::Red;
 				MeasureGV->Rows[e->RowIndex]->Cells[1]->Style->BackColor = Color::Red;

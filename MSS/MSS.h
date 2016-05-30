@@ -81,10 +81,10 @@ namespace MSS {
 	 * Функция определяющая является ли i-ый результат измерения промахом критерием Романовского
 	 * Параметры:
 	 * +double *measures - массив измерений
+	 * +double q - уровень значимости
 	 * +int i - переменная
 	 * +int n - кол-во измерений
-	 * +double q - уровень значимости
-	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
+	 * Авторы: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
 	 */
 	bool IsFailByRomanovsky(double *measures, double q, int i, int n) {
 		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
@@ -137,7 +137,7 @@ namespace MSS {
 	/**
 	 * Фунция для нахождения значений Аббе
 	 * Параметры:
-	 * +System::String^ q - уровень значимости
+	 * +double q - уровень значимости
 	 * +int n - кол-во измерений
 	 * Автор: Сидоркин Владислав
 	 */
@@ -156,8 +156,8 @@ namespace MSS {
 	 * Параметры:
 	 * +double *measures - массив измерений
 	 * +int n - кол-во измерений
-	 * +System::String^ q - уровень значимости
-	 * Автор: Нигаматьянов Рафис, Ардесов Вячеслав
+	 * +double q - уровень значимости
+	 * Авторы: Нигаматьянов Рафис, Ардесов Вячеслав
 	 */
 	bool IsSystematicError(double *measures, double q, int n) {
 		double sum = 0;
@@ -167,5 +167,23 @@ namespace MSS {
 		double V = (sum / (2 * (n - 1))) / pow(StdDeviation(measures, n), 2);
 		double Vq = GetAbbe(q,n);
 		return V < Vq;
+	}
+	
+	/**
+	 * Функция для получения значения критерия Стьюдента
+	 * Параметры:
+	 * +double q - уровень значимости
+	 * +int k - число уровней свободы
+	 * Автор: Ардесов Вячеслав
+	 */
+	double GetStudent(double q, int k) {
+		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
+		connect->Open();
+		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT t FROM Student WHERE n=" + k + " AND q=" + q.ToString(gcnew System::Globalization::CultureInfo("en", false)) + ";", connect);
+		Debug::WriteLine("SQL Query:");
+		Debug::WriteLine(cmd->CommandText);
+		SQLiteDataReader^ reader = cmd->ExecuteReader();
+		reader->Read();
+		return reader->GetDouble(0);
 	}
 }

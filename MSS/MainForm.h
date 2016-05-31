@@ -823,17 +823,19 @@ namespace MSS {
 	}
 	private: System::Void MeasureGV_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 		if (e->KeyCode == Keys::V && e->Control) {
-			StringReader ^ sr = gcnew StringReader(Clipboard::GetText());
-			String ^ s;
-			int i = MeasureGV->SelectedCells[0]->RowIndex;
-			while((s = sr->ReadLine()) != nullptr) {
-				MeasureGV->Rows->Insert(i, 1);
-				MeasureGV->Rows[i]->Cells[1]->Value = s;
-				i++;
-			}
-			int n = MeasureGV->RowCount;
-			for (int i = 0; i < n; i++) {
-				MeasureGV->Rows[i]->Cells[0]->Value = i + 1;
+			if (MeasureGV->SelectedCells->Count > 0) {
+				StringReader ^ sr = gcnew StringReader(Clipboard::GetText());
+				String ^ s;
+				int i = MeasureGV->SelectedCells[0]->RowIndex;
+				while ((s = sr->ReadLine()) != nullptr) {
+					MeasureGV->Rows->Insert(i, 1);
+					MeasureGV->Rows[i]->Cells[1]->Value = s;
+					i++;
+				}
+				int n = MeasureGV->RowCount;
+				for (int i = 0; i < n; i++) {
+					MeasureGV->Rows[i]->Cells[0]->Value = i + 1;
+				}
 			}
 		}
 		try {

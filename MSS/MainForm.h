@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "MSS.h"
 #include "AboutForm.h"
+#include "HelpForm.h"
 
 namespace MSS {
 	using namespace System;
@@ -97,10 +98,10 @@ namespace MSS {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Title^  title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^  title2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->MeanLevelCB = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -219,15 +220,15 @@ namespace MSS {
 			this->MeasureGV->MultiSelect = false;
 			this->MeasureGV->Name = L"MeasureGV";
 			this->MeasureGV->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
-			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle1->BackColor = System::Drawing::Color::White;
-			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
+			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle2->BackColor = System::Drawing::Color::White;
+			dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
-			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->MeasureGV->RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->MeasureGV->RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this->MeasureGV->RowHeadersVisible = false;
 			this->MeasureGV->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->MeasureGV->RowTemplate->Resizable = System::Windows::Forms::DataGridViewTriState::False;
@@ -327,26 +328,26 @@ namespace MSS {
 			this->Chart->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			chartArea1->AxisX->Minimum = 1;
-			chartArea1->AxisY->LabelStyle->Format = L"0.00";
-			chartArea1->Name = L"Area";
-			this->Chart->ChartAreas->Add(chartArea1);
+			chartArea2->AxisX->Minimum = 1;
+			chartArea2->AxisY->LabelStyle->Format = L"0.00";
+			chartArea2->Name = L"Area";
+			this->Chart->ChartAreas->Add(chartArea2);
 			this->tableLayoutPanel1->SetColumnSpan(this->Chart, 2);
 			this->Chart->Location = System::Drawing::Point(3, 3);
 			this->Chart->Name = L"Chart";
-			series1->ChartArea = L"Area";
-			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
-			series1->Color = System::Drawing::Color::Red;
-			series1->CustomProperties = L"IsXAxisQuantitative=False";
-			series1->Name = L"line";
-			series1->YValuesPerPoint = 2;
-			this->Chart->Series->Add(series1);
+			series2->ChartArea = L"Area";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Color = System::Drawing::Color::Red;
+			series2->CustomProperties = L"IsXAxisQuantitative=False";
+			series2->Name = L"line";
+			series2->YValuesPerPoint = 2;
+			this->Chart->Series->Add(series2);
 			this->Chart->Size = System::Drawing::Size(563, 243);
 			this->Chart->TabIndex = 18;
 			this->Chart->Text = L"Chart";
-			title1->Name = L"Title1";
-			title1->Text = L"Измерения";
-			this->Chart->Titles->Add(title1);
+			title2->Name = L"Title1";
+			title2->Text = L"Измерения";
+			this->Chart->Titles->Add(title2);
 			// 
 			// DeleteFailButton
 			// 
@@ -618,6 +619,7 @@ namespace MSS {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->MeanLevelCB);
 			this->Controls->Add(this->label1);
+			this->MinimumSize = System::Drawing::Size(740, 500);
 			this->Name = L"MainForm";
 			this->Text = L"MSS";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->EndInit();
@@ -792,7 +794,8 @@ namespace MSS {
 	}
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		UnderConstructionBox();
+		HelpForm^ form = gcnew HelpForm();
+		form->Show();
 	}
 
 	private: System::Void ClearButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -838,13 +841,11 @@ namespace MSS {
 				}
 			}
 		}
-		try {
-			if (e->KeyCode == Keys::Delete) {
-				if (MeasureGV->SelectedCells[0]->RowIndex != MeasureGV->Rows->Count - 1) {
-					DeleteRow(MeasureGV->SelectedCells[0]->RowIndex);
-				}
+		if (e->KeyCode == Keys::Delete) {
+			if (MeasureGV->SelectedCells[0]->RowIndex != MeasureGV->Rows->Count - 1) {
+				DeleteRow(MeasureGV->SelectedCells[0]->RowIndex);
 			}
-		}finally{}
+		}
 	}
 };
 }

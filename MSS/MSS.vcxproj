@@ -187,6 +187,9 @@ copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
     <ClInclude Include="AboutForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="HelpForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -195,6 +198,9 @@ copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
   <ItemGroup>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <DependentUpon>HelpForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>

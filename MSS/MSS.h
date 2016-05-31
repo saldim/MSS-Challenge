@@ -85,19 +85,40 @@ namespace MSS {
 	 * +int i - переменная
 	 * +int n - кол-во измерений
 	 * Авторы: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
+	 * Примечание: Устаревшая - неоптимальная по времени из-за большого кол-ва обращения к бд
 	 */
 	bool IsFailByRomanovsky(double *measures, double q, int i, int n) {
 		double beta = abs(Average(measures, n) - measures[i]) / StdDeviation(measures, n);
 		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
 		connect->Open();
 		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Romanovsky WHERE n=" + n + " AND q=" + q.ToString(gcnew System::Globalization::CultureInfo("en",false)) + ";", connect);
-		Debug::WriteLine("SQL Query:");
+		Debug::Write("SQL Query:");
 		Debug::WriteLine(cmd->CommandText);
 		SQLiteDataReader^ reader = cmd->ExecuteReader();
 		reader->Read();
 		double betaq = reader->GetDouble(0); //Пороговое значение критерия Романовского
 		connect->Close();
 		return beta > betaq;
+	}
+
+	/**
+	 * Функция для нахождения порогового значения критерия Романовского
+	 * Параметры:
+	 * +double q - уровень значимости
+	 * +int n - кол-во измерений 
+	 * Автор: Ардесов Вячеслав
+	 */
+	double GetRomanovsky(double q, int n) {
+		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
+		connect->Open();
+		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT value FROM Romanovsky WHERE n=" + n + " AND q=" + q.ToString(gcnew System::Globalization::CultureInfo("en", false)) + ";", connect);
+		Debug::Write("SQL Query:");
+		Debug::WriteLine(cmd->CommandText);
+		SQLiteDataReader^ reader = cmd->ExecuteReader();
+		reader->Read();
+		double betaq = reader->GetDouble(0);
+		connect->Close();
+		return betaq;
 	}
 
 	/**
@@ -180,10 +201,33 @@ namespace MSS {
 		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
 		connect->Open();
 		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT t FROM Student WHERE n=" + k + " AND q=" + q.ToString(gcnew System::Globalization::CultureInfo("en", false)) + ";", connect);
-		Debug::WriteLine("SQL Query:");
+		Debug::Write("SQL Query:");
 		Debug::WriteLine(cmd->CommandText);
 		SQLiteDataReader^ reader = cmd->ExecuteReader();
 		reader->Read();
-		return reader->GetDouble(0);
+		double result = reader->GetDouble(0);
+		connect->Close();
+		return result;
 	}
+
+	/**
+	 * Функция для получения корня уравнения f(x) = r, где f(x) - функция Лапласа
+	 * Параметры:
+	 * +double q - уровень значимости
+	 * +int k - число уровней свободы
+	 * Автор: Ардесов Вячеслав
+	 */
+	double GetLaplasArgument(double r) {
+		SQLiteConnection^ connect = gcnew SQLiteConnection("Data Source=tables.db3; Version=3;");
+		connect->Open();
+		SQLiteCommand^ cmd = gcnew SQLiteCommand("SELECT z FROM Laplas WHERE \"f(z)\"=" + r.ToString(gcnew System::Globalization::CultureInfo("en", false)) + ";", connect);
+		Debug::Write("SQL Query:");
+		Debug::WriteLine(cmd->CommandText);
+		SQLiteDataReader^ reader = cmd->ExecuteReader();
+		reader->Read();
+		double z = reader->GetDouble(0);
+		connect->Close();
+		return z;
+	}
+	
 }

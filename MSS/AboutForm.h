@@ -1,7 +1,6 @@
 #pragma once
 
 namespace MSS {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -9,24 +8,18 @@ namespace MSS {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	/// <summary>
-	/// Сводка для AboutForm
-	/// </summary>
+	/**
+	 * Класс формы "О программе"
+	 * Автор: Салихов Дмитрий
+	 */
 	public ref class AboutForm : public System::Windows::Forms::Form
 	{
 	public:
 		AboutForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
 		}
-
 	protected:
-		/// <summary>
-		/// Освободить все используемые ресурсы.
-		/// </summary>
 		~AboutForm()
 		{
 			if (components)
@@ -39,21 +32,11 @@ namespace MSS {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::LinkLabel^  linkLabel1;
-
-
 	protected:
-
 	private:
-		/// <summary>
-		/// Обязательная переменная конструктора.
-		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(AboutForm::typeid));
@@ -74,7 +57,6 @@ namespace MSS {
 			this->label1->TabIndex = 0;
 			this->label1->Text = resources->GetString(L"label1.Text");
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			this->label1->Click += gcnew System::EventHandler(this, &AboutForm::label1_Click);
 			// 
 			// label2
 			// 
@@ -139,19 +121,12 @@ namespace MSS {
 			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
 			this->Text = L"О программе";
 			this->TopMost = true;
-			this->Load += gcnew System::EventHandler(this, &AboutForm::AboutForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void AboutForm_Load(System::Object^  sender, System::EventArgs^  e) {
-	}
-	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
-	}
-	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
-	}
 	private: System::Void linkLabel1_LinkClicked(System::Object^  sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^  e) {
 		System::Diagnostics::Process::Start("http://rambrera.com/go/mss1/");
 	}

@@ -13,13 +13,20 @@ namespace MSS {
 	using namespace System::Diagnostics;
 	using namespace System::Text::RegularExpressions;
 	using namespace System::IO;
-	/// <summary>
-	/// Сводка для MainForm
-	/// </summary>
+	
+	/**
+	 * Класс главной формы приложения
+	 * Авторы: Ардесов Вячеслав, Салихов Дмитрий
+	 */
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
 		System::Globalization::CultureInfo ^ culture;
+
+		/**
+		 * Конструктор класса (нужен для инициализации формы)
+		 * Автор: Ардесов Вячеслав
+		 */
 		MainForm(void)
 		{
 			InitializeComponent();
@@ -36,9 +43,10 @@ namespace MSS {
 		}
 
 	protected:
-		/// <summary>
-		/// Освободить все используемые ресурсы.
-		/// </summary>
+		/**
+		 * Деструтор формы - отчистка памяти после выгрузки формы
+		 * Автор: Ардесов Вячеслав
+		 */
 		~MainForm()
 		{
 			if (components)
@@ -86,16 +94,14 @@ namespace MSS {
 
 	protected:
 	private:
-		/// <summary>
-		/// Обязательная переменная конструктора.
-		/// </summary>
+
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
-		/// </summary>
+		/**
+		 * Код для построения формы, инициализации компонетов, их размещения и внешнего вида.
+		 * Автор: Салихов Дмитрий
+		 */
 		void InitializeComponent(void)
 		{
 			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
@@ -634,11 +640,25 @@ namespace MSS {
 
 		}
 #pragma endregion
+	/**
+	 * Функция вызывающая окно с
+	 * информацией о не доступности
+	 * данной функции в текущей версии
+	 * приложения
+	 * Автор: Салихов Дмитрий
+	 */
 	private: void UnderConstructionBox()
 	{
 		MessageBox::Show(this, "Функция будет доступна в следующих версиях приложения", "Информация", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}	
-
+	
+	/**
+	 * Главная функция приложения: 
+	 * в ней идут основные расчеты
+	 * и обработка данных
+	 * Вызывается при нажатии на кнопку "Расчитать"
+	 * Автор: Ардесов Вячеслав
+	 */
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		Stopwatch ^ sw = gcnew Stopwatch(); 
 		sw->Start(); //Запускаем контроль времени		
@@ -751,12 +771,23 @@ namespace MSS {
 		}
 	}
 
+	/**
+	 * Функция вызывающаяся при
+	 * добавлении новой строки в таблице
+	 * Автор: Ардесов Вячеслав
+	 */
 	private: System::Void MeasureGV_RowsAdded(System::Object^  sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs^  e) {
 		MeasureGV->Rows[e->RowIndex]->Cells[0]->Value = e->RowIndex + 1;
 	}
 
+	/**
+	 * Функция вызывающаяся при завершении 
+	 * редактирования ячейки,
+	 * здесь ведется проверка 
+	 * корректности данных и удаление пустых ячеек
+	 * Автор: Ардесов Вячеслав
+	 */
 	delegate void DeleteRowDelegate(int index);
-
 	private: System::Void MeasureGV_CellEndEdit(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 		if (MeasureGV->RowCount != 1 && MeasureGV->Rows[e->RowIndex]->Cells[1]->Value == nullptr) {
 			DeleteRowDelegate^ action = gcnew DeleteRowDelegate(this,&MainForm::DeleteRow);
@@ -779,6 +810,10 @@ namespace MSS {
 		}
 	}
 
+	/**
+	 * Удаление строки
+	 * Автор: Ардесов Вячеслав
+	 */
 	private: void DeleteRow(int index) {
 		MeasureGV->Rows->RemoveAt(index);
 		int count = MeasureGV->RowCount;
@@ -787,17 +822,32 @@ namespace MSS {
 			MeasureGV->Rows[i]->Cells[0]->Value = i+1;
 		}
 	}
-			 
+		
+	/**
+	 * Функция для открытия формы "О программе"
+	 * Вызывается при нажатии кнопки "О программе"
+	 * Автор: Салихов Дмитрий
+	 */
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		AboutForm^ form = gcnew AboutForm();
 		form->Show();
 	}
 
+    /**
+	 * Функция для открытия формы "Руководство пользователя"
+	 * Вызывается при нажатии кнопки "Справка"
+	 * Автор: Салихов Дмитрий
+	 */
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		HelpForm^ form = gcnew HelpForm();
 		form->Show();
 	}
 
+	/**	
+	 * Функция для возвращения формы к первоначальному состоянию
+	 * Вызывается при нажатии кнопки "Очистить"
+	 * Автор: Салихов Дмитрий
+	 */
 	private: System::Void ClearButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		MeasureGV->Rows->Clear();
 		AverageLabel->Text = "";
@@ -812,6 +862,11 @@ namespace MSS {
 		SysErrLabel->Visible = false;
 	}
 
+	/**
+	 * Функция для удаления промахов в измерениях
+	 * Вызывается при нажатии кнопки "Удалить"
+	 * Автор: Ардесов Вячеслав
+	 */
 	private: System::Void DeleteFailButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		int n = MeasureGV->RowCount;
 		for (int i = 0; i < n; i++) {
@@ -824,6 +879,12 @@ namespace MSS {
 			MeasureGV->Rows[i]->Cells[0]->Value = i + 1;
 		}
 	}
+
+	/**
+	 * Функция для обработки действий с клавиатуры
+	 * Вызывается при нажатии клавишь на клавиатуре
+	 * Автор: Ардесов Вячеслав
+	 */
 	private: System::Void MeasureGV_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 		if (e->KeyCode == Keys::V && e->Control) {
 			if (MeasureGV->SelectedCells->Count > 0) {

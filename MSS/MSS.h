@@ -5,7 +5,6 @@ namespace MSS {
 	using namespace System;
 	using namespace System::Data::SQLite;
 	using namespace System::Diagnostics;
-	
 
 	/**
 	 * Фунция для округления числа до 4-го знака
@@ -84,7 +83,7 @@ namespace MSS {
 	 * +double q - уровень значимости
 	 * +int i - переменная
 	 * +int n - кол-во измерений
-	 * Авторы: Нигаматьянов Рафис, Ардесов Вячеслав(работа с бд)
+	 * Авторы: Нигаматьянов Рафис
 	 * Примечание: Устаревшая - неоптимальная по времени из-за большого кол-ва обращения к бд
 	 */
 	bool IsFailByRomanovsky(double *measures, double q, int i, int n) {

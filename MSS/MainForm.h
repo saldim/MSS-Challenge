@@ -43,6 +43,7 @@ namespace MSS {
 		}
 
 	protected:
+
 		/**
 		 * Деструтор формы - отчистка памяти после выгрузки формы
 		 * Автор: Ардесов Вячеслав
@@ -54,6 +55,7 @@ namespace MSS {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::ComboBox^  MeanLevelCB;
 	private: System::Windows::Forms::Label^  label2;
@@ -80,18 +82,18 @@ namespace MSS {
 	private: System::Windows::Forms::Label^  FailCountLabel;
 	private: System::Windows::Forms::Label^  CountLabel;
 	private: System::Windows::Forms::Label^  IntervalLabel;
-	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Label^  label11;
-	private: System::Windows::Forms::Label^  ResultLabel;
 	private: System::Windows::Forms::Label^  label9;
 	private: System::Windows::Forms::TextBox^  EmiTextBox;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Id;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  B;
 	private: System::Windows::Forms::Label^  label10;
 	private: System::Windows::Forms::Label^  LaplasLabel;
 
 
+
+	private: System::Windows::Forms::Label^  ResultLabel;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Id;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  B;
 	protected:
 	private:
 
@@ -104,19 +106,16 @@ namespace MSS {
 		 */
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Title^  title2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^  title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->MeanLevelCB = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SysErrLabel = (gcnew System::Windows::Forms::Label());
 			this->SolveButton = (gcnew System::Windows::Forms::Button());
 			this->MeasureGV = (gcnew System::Windows::Forms::DataGridView());
-			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->B = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
@@ -132,8 +131,6 @@ namespace MSS {
 			this->MseLabel = (gcnew System::Windows::Forms::Label());
 			this->StdDivLabel = (gcnew System::Windows::Forms::Label());
 			this->label11 = (gcnew System::Windows::Forms::Label());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->ResultLabel = (gcnew System::Windows::Forms::Label());
 			this->FailCountLabel = (gcnew System::Windows::Forms::Label());
 			this->CountLabel = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
@@ -142,14 +139,17 @@ namespace MSS {
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->IntervalLabel = (gcnew System::Windows::Forms::Label());
 			this->LaplasLabel = (gcnew System::Windows::Forms::Label());
+			this->ResultLabel = (gcnew System::Windows::Forms::Label());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->EmiTextBox = (gcnew System::Windows::Forms::TextBox());
+			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->B = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->BeginInit();
 			this->tableLayoutPanel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->BeginInit();
 			this->groupBox1->SuspendLayout();
 			this->tableLayoutPanel2->SuspendLayout();
-			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -197,7 +197,7 @@ namespace MSS {
 			// SolveButton
 			// 
 			this->SolveButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->SolveButton->Location = System::Drawing::Point(6, 474);
+			this->SolveButton->Location = System::Drawing::Point(6, 531);
 			this->SolveButton->Name = L"SolveButton";
 			this->SolveButton->Size = System::Drawing::Size(229, 27);
 			this->SolveButton->TabIndex = 10;
@@ -212,29 +212,28 @@ namespace MSS {
 			this->MeasureGV->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left));
 			this->MeasureGV->BackgroundColor = System::Drawing::Color::White;
-			this->MeasureGV->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->MeasureGV->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::Raised;
+			this->MeasureGV->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->MeasureGV->ClipboardCopyMode = System::Windows::Forms::DataGridViewClipboardCopyMode::EnableWithoutHeaderText;
-			this->MeasureGV->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->MeasureGV->ColumnHeadersVisible = false;
+			this->MeasureGV->ColumnHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleCenter;
+			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Window;
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Calibri", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->MeasureGV->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			this->MeasureGV->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::DisableResizing;
 			this->MeasureGV->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
 				this->Id, this->Measure,
 					this->B
 			});
+			this->MeasureGV->EnableHeadersVisualStyles = false;
 			this->MeasureGV->ImeMode = System::Windows::Forms::ImeMode::NoControl;
 			this->MeasureGV->Location = System::Drawing::Point(6, 23);
 			this->MeasureGV->MultiSelect = false;
 			this->MeasureGV->Name = L"MeasureGV";
-			this->MeasureGV->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
-			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle2->BackColor = System::Drawing::Color::White;
-			dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::WindowText;
-			dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->MeasureGV->RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this->MeasureGV->RowHeadersVisible = false;
 			this->MeasureGV->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->MeasureGV->RowTemplate->Resizable = System::Windows::Forms::DataGridViewTriState::False;
@@ -242,40 +241,16 @@ namespace MSS {
 			this->MeasureGV->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::CellSelect;
 			this->MeasureGV->ShowEditingIcon = false;
 			this->MeasureGV->ShowRowErrors = false;
-			this->MeasureGV->Size = System::Drawing::Size(229, 445);
+			this->MeasureGV->Size = System::Drawing::Size(231, 502);
 			this->MeasureGV->TabIndex = 9;
 			this->MeasureGV->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainForm::MeasureGV_CellEndEdit);
 			this->MeasureGV->RowsAdded += gcnew System::Windows::Forms::DataGridViewRowsAddedEventHandler(this, &MainForm::MeasureGV_RowsAdded);
 			this->MeasureGV->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::MeasureGV_KeyDown);
 			// 
-			// Id
-			// 
-			this->Id->Frozen = true;
-			this->Id->HeaderText = L"Id";
-			this->Id->Name = L"Id";
-			this->Id->ReadOnly = true;
-			this->Id->Resizable = System::Windows::Forms::DataGridViewTriState::False;
-			this->Id->Width = 30;
-			// 
-			// Measure
-			// 
-			this->Measure->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::None;
-			this->Measure->Frozen = true;
-			this->Measure->HeaderText = L"Измерения";
-			this->Measure->Name = L"Measure";
-			this->Measure->Resizable = System::Windows::Forms::DataGridViewTriState::True;
-			this->Measure->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			// 
-			// B
-			// 
-			this->B->HeaderText = L"B";
-			this->B->Name = L"B";
-			this->B->ReadOnly = true;
-			// 
 			// button1
 			// 
 			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->button1->Location = System::Drawing::Point(6, 504);
+			this->button1->Location = System::Drawing::Point(6, 561);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(229, 27);
 			this->button1->TabIndex = 12;
@@ -286,7 +261,7 @@ namespace MSS {
 			// button2
 			// 
 			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->button2->Location = System::Drawing::Point(6, 534);
+			this->button2->Location = System::Drawing::Point(6, 591);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(229, 27);
 			this->button2->TabIndex = 13;
@@ -314,14 +289,14 @@ namespace MSS {
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 51.86047F)));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 48.13953F)));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 30)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(569, 512);
+			this->tableLayoutPanel1->Size = System::Drawing::Size(569, 569);
 			this->tableLayoutPanel1->TabIndex = 24;
 			// 
 			// ClearButton
 			// 
 			this->ClearButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->ClearButton->Location = System::Drawing::Point(3, 484);
+			this->ClearButton->Location = System::Drawing::Point(3, 541);
 			this->ClearButton->Name = L"ClearButton";
 			this->ClearButton->Size = System::Drawing::Size(276, 25);
 			this->ClearButton->TabIndex = 24;
@@ -334,32 +309,32 @@ namespace MSS {
 			this->Chart->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			chartArea2->AxisX->Minimum = 1;
-			chartArea2->AxisY->LabelStyle->Format = L"0.00";
-			chartArea2->Name = L"Area";
-			this->Chart->ChartAreas->Add(chartArea2);
+			chartArea1->AxisX->Minimum = 1;
+			chartArea1->AxisY->LabelStyle->Format = L"0.00";
+			chartArea1->Name = L"Area";
+			this->Chart->ChartAreas->Add(chartArea1);
 			this->tableLayoutPanel1->SetColumnSpan(this->Chart, 2);
 			this->Chart->Location = System::Drawing::Point(3, 3);
 			this->Chart->Name = L"Chart";
-			series2->ChartArea = L"Area";
-			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
-			series2->Color = System::Drawing::Color::Red;
-			series2->CustomProperties = L"IsXAxisQuantitative=False";
-			series2->Name = L"line";
-			series2->YValuesPerPoint = 2;
-			this->Chart->Series->Add(series2);
-			this->Chart->Size = System::Drawing::Size(563, 243);
+			series1->ChartArea = L"Area";
+			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series1->Color = System::Drawing::Color::Red;
+			series1->CustomProperties = L"IsXAxisQuantitative=False";
+			series1->Name = L"line";
+			series1->YValuesPerPoint = 2;
+			this->Chart->Series->Add(series1);
+			this->Chart->Size = System::Drawing::Size(563, 273);
 			this->Chart->TabIndex = 18;
 			this->Chart->Text = L"Chart";
-			title2->Name = L"Title1";
-			title2->Text = L"Измерения";
-			this->Chart->Titles->Add(title2);
+			title1->Name = L"Title1";
+			title1->Text = L"Измерения";
+			this->Chart->Titles->Add(title1);
 			// 
 			// DeleteFailButton
 			// 
 			this->DeleteFailButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->DeleteFailButton->Location = System::Drawing::Point(285, 484);
+			this->DeleteFailButton->Location = System::Drawing::Point(285, 541);
 			this->DeleteFailButton->Name = L"DeleteFailButton";
 			this->DeleteFailButton->Size = System::Drawing::Size(281, 25);
 			this->DeleteFailButton->TabIndex = 25;
@@ -374,12 +349,12 @@ namespace MSS {
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->tableLayoutPanel1->SetColumnSpan(this->groupBox1, 2);
 			this->groupBox1->Controls->Add(this->tableLayoutPanel2);
-			this->groupBox1->Location = System::Drawing::Point(3, 252);
+			this->groupBox1->Location = System::Drawing::Point(3, 282);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(563, 226);
+			this->groupBox1->Size = System::Drawing::Size(563, 253);
 			this->groupBox1->TabIndex = 17;
 			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Информация(без учета промахов):";
+			this->groupBox1->Text = L"Информация:";
 			// 
 			// tableLayoutPanel2
 			// 
@@ -395,7 +370,6 @@ namespace MSS {
 			this->tableLayoutPanel2->Controls->Add(this->MseLabel, 1, 2);
 			this->tableLayoutPanel2->Controls->Add(this->StdDivLabel, 1, 1);
 			this->tableLayoutPanel2->Controls->Add(this->label11, 0, 7);
-			this->tableLayoutPanel2->Controls->Add(this->panel1, 0, 8);
 			this->tableLayoutPanel2->Controls->Add(this->FailCountLabel, 1, 6);
 			this->tableLayoutPanel2->Controls->Add(this->CountLabel, 1, 5);
 			this->tableLayoutPanel2->Controls->Add(this->label6, 0, 6);
@@ -404,6 +378,7 @@ namespace MSS {
 			this->tableLayoutPanel2->Controls->Add(this->label10, 0, 3);
 			this->tableLayoutPanel2->Controls->Add(this->IntervalLabel, 1, 4);
 			this->tableLayoutPanel2->Controls->Add(this->LaplasLabel, 1, 3);
+			this->tableLayoutPanel2->Controls->Add(this->ResultLabel, 0, 8);
 			this->tableLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->tableLayoutPanel2->Location = System::Drawing::Point(3, 16);
 			this->tableLayoutPanel2->Name = L"tableLayoutPanel2";
@@ -417,7 +392,7 @@ namespace MSS {
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
-			this->tableLayoutPanel2->Size = System::Drawing::Size(557, 207);
+			this->tableLayoutPanel2->Size = System::Drawing::Size(557, 234);
 			this->tableLayoutPanel2->TabIndex = 0;
 			// 
 			// AverageLabel
@@ -489,28 +464,6 @@ namespace MSS {
 			this->label11->Size = System::Drawing::Size(62, 19);
 			this->label11->TabIndex = 41;
 			this->label11->Text = L"Результат:";
-			// 
-			// panel1
-			// 
-			this->tableLayoutPanel2->SetColumnSpan(this->panel1, 2);
-			this->panel1->Controls->Add(this->ResultLabel);
-			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->panel1->Location = System::Drawing::Point(3, 135);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(551, 69);
-			this->panel1->TabIndex = 40;
-			// 
-			// ResultLabel
-			// 
-			this->ResultLabel->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->ResultLabel->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Italic, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->ResultLabel->Location = System::Drawing::Point(0, 0);
-			this->ResultLabel->Name = L"ResultLabel";
-			this->ResultLabel->Size = System::Drawing::Size(551, 69);
-			this->ResultLabel->TabIndex = 0;
-			this->ResultLabel->Text = L"A = .... ±  ∆..., 0,95;";
-			this->ResultLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// FailCountLabel
 			// 
@@ -592,6 +545,19 @@ namespace MSS {
 			this->LaplasLabel->TabIndex = 43;
 			this->LaplasLabel->Text = L"Laplas";
 			// 
+			// ResultLabel
+			// 
+			this->tableLayoutPanel2->SetColumnSpan(this->ResultLabel, 2);
+			this->ResultLabel->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->ResultLabel->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Italic, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->ResultLabel->Location = System::Drawing::Point(3, 132);
+			this->ResultLabel->Name = L"ResultLabel";
+			this->ResultLabel->Size = System::Drawing::Size(551, 102);
+			this->ResultLabel->TabIndex = 44;
+			this->ResultLabel->Text = L"A = .... ±  ∆..., 0,95;";
+			this->ResultLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// label9
 			// 
 			this->label9->AutoSize = true;
@@ -609,11 +575,38 @@ namespace MSS {
 			this->EmiTextBox->TabIndex = 26;
 			this->EmiTextBox->Text = L"0,01";
 			// 
+			// Id
+			// 
+			this->Id->Frozen = true;
+			this->Id->HeaderText = L"№";
+			this->Id->Name = L"Id";
+			this->Id->ReadOnly = true;
+			this->Id->Resizable = System::Windows::Forms::DataGridViewTriState::False;
+			this->Id->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Id->Width = 30;
+			// 
+			// Measure
+			// 
+			this->Measure->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::None;
+			this->Measure->HeaderText = L"Измерение";
+			this->Measure->Name = L"Measure";
+			this->Measure->Resizable = System::Windows::Forms::DataGridViewTriState::True;
+			this->Measure->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			// 
+			// B
+			// 
+			this->B->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+			this->B->HeaderText = L"β";
+			this->B->Name = L"B";
+			this->B->ReadOnly = true;
+			this->B->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->B->ToolTipText = L"Коэффициент Романовского";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(826, 566);
+			this->ClientSize = System::Drawing::Size(826, 623);
 			this->Controls->Add(this->EmiTextBox);
 			this->Controls->Add(this->label9);
 			this->Controls->Add(this->tableLayoutPanel1);
@@ -634,17 +627,13 @@ namespace MSS {
 			this->groupBox1->ResumeLayout(false);
 			this->tableLayoutPanel2->ResumeLayout(false);
 			this->tableLayoutPanel2->PerformLayout();
-			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	/**
-	 * Функция вызывающая окно с
-	 * информацией о не доступности
-	 * данной функции в текущей версии
-	 * приложения
+	 * Функция вызывающая окно с данной функции в текущей версии приложения
 	 * Автор: Салихов Дмитрий
 	 */
 	private: void UnderConstructionBox()
@@ -653,16 +642,14 @@ namespace MSS {
 	}	
 	
 	/**
-	 * Главная функция приложения: 
-	 * в ней идут основные расчеты
-	 * и обработка данных
+	 * Главная функция приложения: в ней идут основные расчеты и обработка данных
 	 * Вызывается при нажатии на кнопку "Расчитать"
 	 * Автор: Ардесов Вячеслав
 	 */
 	private: System::Void SolveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		Stopwatch ^ sw = gcnew Stopwatch(); 
 		sw->Start(); //Запускаем контроль времени		
-		double *measures, *_measures;
+		double *measures;
 		try {
 			/*Инициализация: */	  
 			double q = Convert::ToDouble(MeanLevelCB->Text, culture); //Уровень значимости
@@ -699,7 +686,6 @@ namespace MSS {
 
 			/*Смотрим промахи критерием Романовского:*/
 			int fails = 0;							//Кол-во промахов
-			_measures = new double[n];			    //Новый массив измерений, без промахов
 			double beta;							//Значение B
 			double betaq = GetRomanovsky(q, n);     //Порогове значение B
 			try {
@@ -712,27 +698,23 @@ namespace MSS {
 						MeasureGV->Rows[i]->Cells[2]->Style->BackColor = Color::Orange;
 						fails++;
 					}
-					else {
-						_measures[i - fails] = measures[i];
-					}
 				}
 			}
 			catch (Exception^) {
 				throw gcnew DataException("В таблице `Romanovsky` не найдено значение при `n` = " + n + " и `q` = " + MeanLevelCB->Text->ToString(gcnew System::Globalization::CultureInfo("en",false)));
 			}
 			/*Вычисляем границы доверительного интервала Лапласа*/
-			int _n = n - fails; //Кол-во измерений без промахов
 			double z = GetLaplasArgument((1 - q) / 2);
-			double laplas_bottom = Average(_measures, _n) - MeanSquareError(_measures, _n)*z;
-			double laplas_top = Average(_measures, _n) + MeanSquareError(_measures, _n)*z;
+			double laplas_bottom = Average(measures, n) - MeanSquareError(measures, n)*z;
+			double laplas_top = Average(measures, n) + MeanSquareError(measures, n)*z;
 
 			/*Вычисляем границы доверительной погрешности интервала Стьюдента: */									
-			double e = MeanSquareError(_measures,_n)*GetStudent(q, _n - 1); //e = S_*t
+			double e = MeanSquareError(measures,n)*GetStudent(q, n - 1); //e = S_*t
 			Debug::WriteLine("e = " + e);
 			double emi = Convert::ToDouble(EmiTextBox->Text, culture);      //Погрешность средства измерения
 			double delta = sqrt(pow(e,2) + pow(0.6533*emi,2));				//Результатирующая погрешность
-			double student_bottom = Average(_measures, n - fails) - delta;	//Нижнее значение интервала
-			double student_top = Average(_measures, n - fails) + delta;		//Верхнее значение интервала
+			double student_bottom = Average(measures, n - fails) - delta;	//Нижнее значение интервала
+			double student_top = Average(measures, n - fails) + delta;		//Верхнее значение интервала
 
 			/*Строим график:*/
 			double min = Min(measures, n); //Находим минимальные и максимальные значения
@@ -747,18 +729,17 @@ namespace MSS {
 			}
 			
 			/*Выводим информацию и результаты : */
-			AverageLabel->Text = String::Format("{0:0.0000}", Average(_measures, _n));
+			AverageLabel->Text = String::Format("{0:0.0000}", Average(measures, n));
 			IntervalLabel->Text = String::Format("({0:0.0000} ; {1:0.0000})", student_bottom, student_top);
 			LaplasLabel->Text = String::Format("({0:0.0000} ; {1:0.0000})", laplas_bottom, laplas_top);
-			MseLabel->Text = String::Format("{0:0.0000}",MeanSquareError(_measures, _n));
-			StdDivLabel->Text = String::Format("{0:0.0000}", StdDeviation(_measures, _n));
+			MseLabel->Text = String::Format("{0:0.0000}",MeanSquareError(measures, n));
+			StdDivLabel->Text = String::Format("{0:0.0000}", StdDeviation(measures, n));
 			CountLabel->Text = n.ToString();
 			FailCountLabel->Text = fails.ToString();
-			ResultLabel->Text = String::Format(L"A = {0:0.0000} ± ∆{1:0.0000}, {2:0.00};", Average(_measures, _n), delta, 1 - q);
+			ResultLabel->Text = String::Format(L"A = {0:0.0000} ± {1:0.0000}, {2:0.00};", Average(measures, n), delta, 1 - q);
 
 			/*Отчистка памяти:*/
 			delete[] measures;
-			delete[] _measures;
 		}
 		catch (OperationCanceledException^) {}
 		catch (Exception^ e) {
@@ -772,19 +753,34 @@ namespace MSS {
 	}
 
 	/**
-	 * Функция вызывающаяся при
-	 * добавлении новой строки в таблице
+	 * Функция вызывающаяся при добавлении новой строки в таблице
 	 * Автор: Ардесов Вячеслав
 	 */
 	private: System::Void MeasureGV_RowsAdded(System::Object^  sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs^  e) {
 		MeasureGV->Rows[e->RowIndex]->Cells[0]->Value = e->RowIndex + 1;
 	}
-
+	
 	/**
-	 * Функция вызывающаяся при завершении 
-	 * редактирования ячейки,
-	 * здесь ведется проверка 
-	 * корректности данных и удаление пустых ячеек
+	 * Функция для проверки корректности вводимых данных
+	 * Автор: Ардесов Вячеслав
+	 */
+	private: void ValidateCell(int r) {
+		if (MeasureGV->Rows[r]->Cells[1]->Value != nullptr) {
+			Regex^ regex = gcnew Regex("^[0-9]+\\,?[0-9]*$");
+			if (!regex->IsMatch(MeasureGV->Rows[r]->Cells[1]->Value->ToString())) {
+				MeasureGV->Rows[r]->Cells[0]->Style->BackColor = Color::Red;
+				MeasureGV->Rows[r]->Cells[1]->Style->BackColor = Color::Red;
+				MeasureGV->Rows[r]->Cells[2]->Style->BackColor = Color::Red;
+			}
+			else {
+				MeasureGV->Rows[r]->Cells[0]->Style->BackColor = Color::White;
+				MeasureGV->Rows[r]->Cells[1]->Style->BackColor = Color::White;
+				MeasureGV->Rows[r]->Cells[2]->Style->BackColor = Color::White;
+			}
+		}
+	}
+	/**
+	 * Функция вызывающаяся при завершении редактирования ячейки, здесь ведется проверка корректности данных и удаление пустых ячеек
 	 * Автор: Ардесов Вячеслав
 	 */
 	delegate void DeleteRowDelegate(int index);
@@ -794,19 +790,7 @@ namespace MSS {
 			this->BeginInvoke(action,e->RowIndex);
 		}
 		else {
-			if (MeasureGV->Rows[e->RowIndex]->Cells[1]->Value != nullptr) {
-				Regex^ regex = gcnew Regex("^[0-9]+\\,?[0-9]*$");
-				if (!regex->IsMatch(MeasureGV->Rows[e->RowIndex]->Cells[1]->Value->ToString())) {
-					MeasureGV->Rows[e->RowIndex]->Cells[0]->Style->BackColor = Color::Red;
-					MeasureGV->Rows[e->RowIndex]->Cells[1]->Style->BackColor = Color::Red;
-					MeasureGV->Rows[e->RowIndex]->Cells[2]->Style->BackColor = Color::Red;
-				}
-				else {
-					MeasureGV->Rows[e->RowIndex]->Cells[0]->Style->BackColor = Color::White;
-					MeasureGV->Rows[e->RowIndex]->Cells[1]->Style->BackColor = Color::White;
-					MeasureGV->Rows[e->RowIndex]->Cells[2]->Style->BackColor = Color::White;
-				}
-			}
+			ValidateCell(e->RowIndex);
 		}
 	}
 
@@ -882,7 +866,7 @@ namespace MSS {
 
 	/**
 	 * Функция для обработки действий с клавиатуры
-	 * Вызывается при нажатии клавишь на клавиатуре
+	 * Вызывается при нажатии клавиш на клавиатуре
 	 * Автор: Ардесов Вячеслав
 	 */
 	private: System::Void MeasureGV_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
@@ -894,6 +878,7 @@ namespace MSS {
 				while ((s = sr->ReadLine()) != nullptr) {
 					MeasureGV->Rows->Insert(i, 1);
 					MeasureGV->Rows[i]->Cells[1]->Value = s;
+					ValidateCell(i);
 					i++;
 				}
 				int n = MeasureGV->RowCount;

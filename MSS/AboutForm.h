@@ -128,7 +128,7 @@ namespace MSS {
 		}
 #pragma endregion
 	private: System::Void linkLabel1_LinkClicked(System::Object^  sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^  e) {
-		System::Diagnostics::Process::Start("http://rambrera.com/go/mss1/");
+		System::Diagnostics::Process::Start("http://rambrera.com/go/mss1");
 	}
 };
 }

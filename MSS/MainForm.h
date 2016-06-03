@@ -801,7 +801,7 @@ namespace MSS {
 	private: void DeleteRow(int index) {
 		MeasureGV->Rows->RemoveAt(index);
 		int count = MeasureGV->RowCount;
-		if (count < MeasureGV->RowCount) return;
+		if (count == index+1) return;
 		for (int i = index; i < count; i++) {
 			MeasureGV->Rows[i]->Cells[0]->Value = i+1;
 		}
@@ -890,6 +890,10 @@ namespace MSS {
 		if (e->KeyCode == Keys::Delete) {
 			if (MeasureGV->SelectedCells[0]->RowIndex != MeasureGV->Rows->Count - 1) {
 				DeleteRow(MeasureGV->SelectedCells[0]->RowIndex);
+			}
+			int n = MeasureGV->RowCount;
+			for (int i = 0; i < n; i++) {
+				MeasureGV->Rows[i]->Cells[0]->Value = i + 1;
 			}
 		}
 	}

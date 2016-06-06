@@ -39,6 +39,9 @@ namespace MSS {
 			FailCountLabel->Text = "";
 			ResultLabel->Text = "";
 			LaplasLabel->Text = "";
+			AbbeLabel->Text = "";
+			CritAbbeLabel->Text = "";
+			CritRLabel->Text = "";
 			culture = gcnew System::Globalization::CultureInfo("ru", false);
 		}
 
@@ -55,7 +58,6 @@ namespace MSS {
 				delete components;
 			}
 		}
-
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::ComboBox^  MeanLevelCB;
 	private: System::Windows::Forms::Label^  label2;
@@ -87,13 +89,16 @@ namespace MSS {
 	private: System::Windows::Forms::TextBox^  EmiTextBox;
 	private: System::Windows::Forms::Label^  label10;
 	private: System::Windows::Forms::Label^  LaplasLabel;
-
-
-
 	private: System::Windows::Forms::Label^  ResultLabel;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Measure;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  B;
+	private: System::Windows::Forms::Label^  label12;
+	private: System::Windows::Forms::Label^  label14;
+	private: System::Windows::Forms::Label^  label13;
+	private: System::Windows::Forms::Label^  AbbeLabel;
+	private: System::Windows::Forms::Label^  CritAbbeLabel;
+	private: System::Windows::Forms::Label^  CritRLabel;
 	protected:
 	private:
 
@@ -116,6 +121,9 @@ namespace MSS {
 			this->SysErrLabel = (gcnew System::Windows::Forms::Label());
 			this->SolveButton = (gcnew System::Windows::Forms::Button());
 			this->MeasureGV = (gcnew System::Windows::Forms::DataGridView());
+			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->B = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
@@ -130,21 +138,24 @@ namespace MSS {
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->MseLabel = (gcnew System::Windows::Forms::Label());
 			this->StdDivLabel = (gcnew System::Windows::Forms::Label());
-			this->label11 = (gcnew System::Windows::Forms::Label());
-			this->FailCountLabel = (gcnew System::Windows::Forms::Label());
-			this->CountLabel = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->IntervalLabel = (gcnew System::Windows::Forms::Label());
 			this->LaplasLabel = (gcnew System::Windows::Forms::Label());
 			this->ResultLabel = (gcnew System::Windows::Forms::Label());
+			this->label11 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->FailCountLabel = (gcnew System::Windows::Forms::Label());
+			this->label14 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->CountLabel = (gcnew System::Windows::Forms::Label());
+			this->label13 = (gcnew System::Windows::Forms::Label());
+			this->label12 = (gcnew System::Windows::Forms::Label());
+			this->AbbeLabel = (gcnew System::Windows::Forms::Label());
+			this->CritAbbeLabel = (gcnew System::Windows::Forms::Label());
+			this->CritRLabel = (gcnew System::Windows::Forms::Label());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->EmiTextBox = (gcnew System::Windows::Forms::TextBox());
-			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Measure = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->B = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->BeginInit();
 			this->tableLayoutPanel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Chart))->BeginInit();
@@ -246,6 +257,33 @@ namespace MSS {
 			this->MeasureGV->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainForm::MeasureGV_CellEndEdit);
 			this->MeasureGV->RowsAdded += gcnew System::Windows::Forms::DataGridViewRowsAddedEventHandler(this, &MainForm::MeasureGV_RowsAdded);
 			this->MeasureGV->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::MeasureGV_KeyDown);
+			// 
+			// Id
+			// 
+			this->Id->Frozen = true;
+			this->Id->HeaderText = L"№";
+			this->Id->Name = L"Id";
+			this->Id->ReadOnly = true;
+			this->Id->Resizable = System::Windows::Forms::DataGridViewTriState::False;
+			this->Id->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Id->Width = 30;
+			// 
+			// Measure
+			// 
+			this->Measure->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::None;
+			this->Measure->HeaderText = L"Измерение";
+			this->Measure->Name = L"Measure";
+			this->Measure->Resizable = System::Windows::Forms::DataGridViewTriState::True;
+			this->Measure->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			// 
+			// B
+			// 
+			this->B->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+			this->B->HeaderText = L"β";
+			this->B->Name = L"B";
+			this->B->ReadOnly = true;
+			this->B->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->B->ToolTipText = L"Коэффициент Романовского";
 			// 
 			// button1
 			// 
@@ -369,20 +407,29 @@ namespace MSS {
 			this->tableLayoutPanel2->Controls->Add(this->label8, 0, 1);
 			this->tableLayoutPanel2->Controls->Add(this->MseLabel, 1, 2);
 			this->tableLayoutPanel2->Controls->Add(this->StdDivLabel, 1, 1);
-			this->tableLayoutPanel2->Controls->Add(this->label11, 0, 7);
-			this->tableLayoutPanel2->Controls->Add(this->FailCountLabel, 1, 6);
-			this->tableLayoutPanel2->Controls->Add(this->CountLabel, 1, 5);
-			this->tableLayoutPanel2->Controls->Add(this->label6, 0, 6);
-			this->tableLayoutPanel2->Controls->Add(this->label5, 0, 5);
 			this->tableLayoutPanel2->Controls->Add(this->label4, 0, 4);
 			this->tableLayoutPanel2->Controls->Add(this->label10, 0, 3);
 			this->tableLayoutPanel2->Controls->Add(this->IntervalLabel, 1, 4);
 			this->tableLayoutPanel2->Controls->Add(this->LaplasLabel, 1, 3);
-			this->tableLayoutPanel2->Controls->Add(this->ResultLabel, 0, 8);
+			this->tableLayoutPanel2->Controls->Add(this->ResultLabel, 0, 11);
+			this->tableLayoutPanel2->Controls->Add(this->label11, 0, 10);
+			this->tableLayoutPanel2->Controls->Add(this->label6, 0, 9);
+			this->tableLayoutPanel2->Controls->Add(this->FailCountLabel, 1, 9);
+			this->tableLayoutPanel2->Controls->Add(this->label14, 0, 5);
+			this->tableLayoutPanel2->Controls->Add(this->label5, 0, 8);
+			this->tableLayoutPanel2->Controls->Add(this->CountLabel, 1, 8);
+			this->tableLayoutPanel2->Controls->Add(this->label13, 0, 7);
+			this->tableLayoutPanel2->Controls->Add(this->label12, 0, 6);
+			this->tableLayoutPanel2->Controls->Add(this->AbbeLabel, 1, 5);
+			this->tableLayoutPanel2->Controls->Add(this->CritAbbeLabel, 1, 6);
+			this->tableLayoutPanel2->Controls->Add(this->CritRLabel, 1, 7);
 			this->tableLayoutPanel2->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->tableLayoutPanel2->Location = System::Drawing::Point(3, 16);
 			this->tableLayoutPanel2->Name = L"tableLayoutPanel2";
-			this->tableLayoutPanel2->RowCount = 9;
+			this->tableLayoutPanel2->RowCount = 12;
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
@@ -420,8 +467,8 @@ namespace MSS {
 			this->label7->AutoSize = true;
 			this->label7->Location = System::Drawing::Point(3, 32);
 			this->label7->Name = L"label7";
-			this->label7->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
-			this->label7->Size = System::Drawing::Size(186, 16);
+			this->label7->Padding = System::Windows::Forms::Padding(0, 3, 0, 3);
+			this->label7->Size = System::Drawing::Size(186, 19);
 			this->label7->TabIndex = 36;
 			this->label7->Text = L"Среднеквадратичная погрешность:";
 			// 
@@ -455,70 +502,20 @@ namespace MSS {
 			this->StdDivLabel->TabIndex = 39;
 			this->StdDivLabel->Text = L"S";
 			// 
-			// label11
-			// 
-			this->label11->AutoSize = true;
-			this->label11->Location = System::Drawing::Point(3, 112);
-			this->label11->Name = L"label11";
-			this->label11->Padding = System::Windows::Forms::Padding(0, 6, 0, 0);
-			this->label11->Size = System::Drawing::Size(62, 19);
-			this->label11->TabIndex = 41;
-			this->label11->Text = L"Результат:";
-			// 
-			// FailCountLabel
-			// 
-			this->FailCountLabel->AutoSize = true;
-			this->FailCountLabel->Location = System::Drawing::Point(281, 96);
-			this->FailCountLabel->Name = L"FailCountLabel";
-			this->FailCountLabel->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
-			this->FailCountLabel->Size = System::Drawing::Size(51, 16);
-			this->FailCountLabel->TabIndex = 31;
-			this->FailCountLabel->Text = L"FailCount";
-			// 
-			// CountLabel
-			// 
-			this->CountLabel->AutoSize = true;
-			this->CountLabel->Location = System::Drawing::Point(281, 80);
-			this->CountLabel->Name = L"CountLabel";
-			this->CountLabel->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
-			this->CountLabel->Size = System::Drawing::Size(35, 16);
-			this->CountLabel->TabIndex = 33;
-			this->CountLabel->Text = L"Count";
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(3, 96);
-			this->label6->Name = L"label6";
-			this->label6->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
-			this->label6->Size = System::Drawing::Size(121, 16);
-			this->label6->TabIndex = 29;
-			this->label6->Text = L"Количество промахов:";
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(3, 80);
-			this->label5->Name = L"label5";
-			this->label5->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
-			this->label5->Size = System::Drawing::Size(128, 16);
-			this->label5->TabIndex = 28;
-			this->label5->Text = L"Количество измерений:";
-			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(3, 64);
+			this->label4->Location = System::Drawing::Point(3, 67);
 			this->label4->Name = L"label4";
-			this->label4->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
-			this->label4->Size = System::Drawing::Size(211, 16);
+			this->label4->Padding = System::Windows::Forms::Padding(0, 3, 0, 3);
+			this->label4->Size = System::Drawing::Size(211, 19);
 			this->label4->TabIndex = 27;
 			this->label4->Text = L"Доверительный интервал погрешности:";
 			// 
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(3, 48);
+			this->label10->Location = System::Drawing::Point(3, 51);
 			this->label10->Name = L"label10";
 			this->label10->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
 			this->label10->Size = System::Drawing::Size(189, 16);
@@ -528,7 +525,7 @@ namespace MSS {
 			// IntervalLabel
 			// 
 			this->IntervalLabel->AutoSize = true;
-			this->IntervalLabel->Location = System::Drawing::Point(281, 64);
+			this->IntervalLabel->Location = System::Drawing::Point(281, 67);
 			this->IntervalLabel->Name = L"IntervalLabel";
 			this->IntervalLabel->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
 			this->IntervalLabel->Size = System::Drawing::Size(42, 16);
@@ -538,7 +535,7 @@ namespace MSS {
 			// LaplasLabel
 			// 
 			this->LaplasLabel->AutoSize = true;
-			this->LaplasLabel->Location = System::Drawing::Point(281, 48);
+			this->LaplasLabel->Location = System::Drawing::Point(281, 51);
 			this->LaplasLabel->Name = L"LaplasLabel";
 			this->LaplasLabel->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
 			this->LaplasLabel->Size = System::Drawing::Size(38, 16);
@@ -551,12 +548,119 @@ namespace MSS {
 			this->ResultLabel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->ResultLabel->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Italic, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->ResultLabel->Location = System::Drawing::Point(3, 132);
+			this->ResultLabel->Location = System::Drawing::Point(3, 192);
 			this->ResultLabel->Name = L"ResultLabel";
-			this->ResultLabel->Size = System::Drawing::Size(551, 102);
+			this->ResultLabel->Size = System::Drawing::Size(551, 42);
 			this->ResultLabel->TabIndex = 44;
 			this->ResultLabel->Text = L"A = .... ±  ∆..., 0,95;";
 			this->ResultLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// label11
+			// 
+			this->label11->AutoSize = true;
+			this->label11->Location = System::Drawing::Point(3, 172);
+			this->label11->Name = L"label11";
+			this->label11->Padding = System::Windows::Forms::Padding(0, 6, 0, 0);
+			this->label11->Size = System::Drawing::Size(62, 19);
+			this->label11->TabIndex = 41;
+			this->label11->Text = L"Результат:";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(3, 153);
+			this->label6->Name = L"label6";
+			this->label6->Padding = System::Windows::Forms::Padding(0, 3, 0, 3);
+			this->label6->Size = System::Drawing::Size(121, 19);
+			this->label6->TabIndex = 29;
+			this->label6->Text = L"Количество промахов:";
+			// 
+			// FailCountLabel
+			// 
+			this->FailCountLabel->AutoSize = true;
+			this->FailCountLabel->Location = System::Drawing::Point(281, 153);
+			this->FailCountLabel->Name = L"FailCountLabel";
+			this->FailCountLabel->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
+			this->FailCountLabel->Size = System::Drawing::Size(51, 16);
+			this->FailCountLabel->TabIndex = 31;
+			this->FailCountLabel->Text = L"FailCount";
+			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Location = System::Drawing::Point(3, 86);
+			this->label14->Name = L"label14";
+			this->label14->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
+			this->label14->Size = System::Drawing::Size(136, 16);
+			this->label14->TabIndex = 46;
+			this->label14->Text = L"Значение критерия Аббе:";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(3, 137);
+			this->label5->Name = L"label5";
+			this->label5->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
+			this->label5->Size = System::Drawing::Size(128, 16);
+			this->label5->TabIndex = 28;
+			this->label5->Text = L"Количество измерений:";
+			// 
+			// CountLabel
+			// 
+			this->CountLabel->AutoSize = true;
+			this->CountLabel->Location = System::Drawing::Point(281, 137);
+			this->CountLabel->Name = L"CountLabel";
+			this->CountLabel->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
+			this->CountLabel->Size = System::Drawing::Size(35, 16);
+			this->CountLabel->TabIndex = 33;
+			this->CountLabel->Text = L"Count";
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Location = System::Drawing::Point(3, 118);
+			this->label13->Name = L"label13";
+			this->label13->Padding = System::Windows::Forms::Padding(0, 3, 0, 3);
+			this->label13->Size = System::Drawing::Size(242, 19);
+			this->label13->TabIndex = 45;
+			this->label13->Text = L"Пороговое значение критерия Романовского:";
+			// 
+			// label12
+			// 
+			this->label12->AutoSize = true;
+			this->label12->Location = System::Drawing::Point(3, 102);
+			this->label12->Name = L"label12";
+			this->label12->Padding = System::Windows::Forms::Padding(0, 3, 0, 0);
+			this->label12->Size = System::Drawing::Size(193, 16);
+			this->label12->TabIndex = 27;
+			this->label12->Text = L"Пороговое значение критерия Аббе:";
+			// 
+			// AbbeLabel
+			// 
+			this->AbbeLabel->AutoSize = true;
+			this->AbbeLabel->Location = System::Drawing::Point(281, 86);
+			this->AbbeLabel->Name = L"AbbeLabel";
+			this->AbbeLabel->Size = System::Drawing::Size(32, 13);
+			this->AbbeLabel->TabIndex = 47;
+			this->AbbeLabel->Text = L"Abbe";
+			// 
+			// CritAbbeLabel
+			// 
+			this->CritAbbeLabel->AutoSize = true;
+			this->CritAbbeLabel->Location = System::Drawing::Point(281, 102);
+			this->CritAbbeLabel->Name = L"CritAbbeLabel";
+			this->CritAbbeLabel->Size = System::Drawing::Size(47, 13);
+			this->CritAbbeLabel->TabIndex = 48;
+			this->CritAbbeLabel->Text = L"CritAbbe";
+			// 
+			// CritRLabel
+			// 
+			this->CritRLabel->AutoSize = true;
+			this->CritRLabel->Location = System::Drawing::Point(281, 118);
+			this->CritRLabel->Name = L"CritRLabel";
+			this->CritRLabel->Size = System::Drawing::Size(56, 13);
+			this->CritRLabel->TabIndex = 49;
+			this->CritRLabel->Text = L"CritRLabel";
 			// 
 			// label9
 			// 
@@ -574,33 +678,6 @@ namespace MSS {
 			this->EmiTextBox->Size = System::Drawing::Size(111, 20);
 			this->EmiTextBox->TabIndex = 26;
 			this->EmiTextBox->Text = L"0,01";
-			// 
-			// Id
-			// 
-			this->Id->Frozen = true;
-			this->Id->HeaderText = L"№";
-			this->Id->Name = L"Id";
-			this->Id->ReadOnly = true;
-			this->Id->Resizable = System::Windows::Forms::DataGridViewTriState::False;
-			this->Id->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->Id->Width = 30;
-			// 
-			// Measure
-			// 
-			this->Measure->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::None;
-			this->Measure->HeaderText = L"Измерение";
-			this->Measure->Name = L"Measure";
-			this->Measure->Resizable = System::Windows::Forms::DataGridViewTriState::True;
-			this->Measure->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			// 
-			// B
-			// 
-			this->B->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
-			this->B->HeaderText = L"β";
-			this->B->Name = L"B";
-			this->B->ReadOnly = true;
-			this->B->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->B->ToolTipText = L"Коэффициент Романовского";
 			// 
 			// MainForm
 			// 
@@ -674,7 +751,9 @@ namespace MSS {
 			}
 
 			/*Обнаруживаем систематическую погрешность:*/
-			if (IsSystematicError(measures, q, n)) {
+			double V = GetAbbe(measures, q, n); //Значение критерия Аббе
+			double Vcrit = GetCritAbbe(q, n); //Пороговое значение критерия Аббе
+			if (V < Vcrit) {
 				SysErrLabel->Visible = true;
 				System::Windows::Forms::DialogResult r;
 				r = MessageBox::Show(this, "При данном уровне значимости в измерениях присутствует систематическая погрешность. Продолжить?", "Обнаруженна систематическая погрешность!", MessageBoxButtons::OKCancel, MessageBoxIcon::Question);
@@ -737,6 +816,9 @@ namespace MSS {
 			CountLabel->Text = n.ToString();
 			FailCountLabel->Text = fails.ToString();
 			ResultLabel->Text = String::Format(L"A = {0:0.0000} ± {1:0.0000}, {2:0.00};", Average(measures, n), delta, 1 - q);
+			CritRLabel->Text = String::Format("{0:0.0000}", betaq);
+			CritAbbeLabel->Text = String::Format("{0:0.0000}", Vcrit);
+			AbbeLabel->Text = String::Format("{0:0.0000}", V);
 
 			/*Отчистка памяти:*/
 			delete[] measures;
@@ -842,6 +924,9 @@ namespace MSS {
 		FailCountLabel->Text = "";
 		ResultLabel->Text = "";
 		LaplasLabel->Text = "";
+		AbbeLabel->Text = "";
+		CritAbbeLabel->Text = "";
+		CritRLabel->Text = "";
 		Chart->Series["line"]->Points->Clear();
 		SysErrLabel->Visible = false;
 	}

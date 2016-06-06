@@ -155,13 +155,13 @@ namespace MSS {
 	}
 
 	/**
-	 * Фунция для нахождения значений Аббе
+	 * Фунция для нахождения порогового значения критерия Аббе
 	 * Параметры:
 	 * +double q - уровень значимости
 	 * +int n - кол-во измерений
 	 * Автор: Сидоркин Владислав
 	 */
-	double GetAbbe(double q, int n) {
+	double GetCritAbbe(double q, int n) {
 		if (q == 0.01) {
 			return (0.786460084 - (7.06909515 / n) + (41.85569806 / pow(n, 2)) - (146.757431 / pow(n, 3)) + (247.8015024 / pow(n, 4)));
 		}
@@ -172,21 +172,20 @@ namespace MSS {
 	}
 
 	/**
-	 * Функция для определения наличия систематической погрешности критерием Аббе
+	 * Фунция для нахождения значения критерия Аббе
 	 * Параметры:
 	 * +double *measures - массив измерений
 	 * +int n - кол-во измерений
 	 * +double q - уровень значимости
-	 * Авторы: Нигаматьянов Рафис, Ардесов Вячеслав
+	 * Авторы: Нигаматьянов Рафис
 	 */
-	bool IsSystematicError(double *measures, double q, int n) {
+	double GetAbbe(double *measures, double q, int n) {
 		double sum = 0;
 		for (int i = 0; i < n - 1; i++) {
 			sum += pow(measures[i + 1] - measures[i], 2);
 		}
 		double V = (sum / (2 * (n - 1))) / pow(StdDeviation(measures, n), 2);
-		double Vq = GetAbbe(q,n);
-		return V < Vq;
+		return V;
 	}
 	
 	/**

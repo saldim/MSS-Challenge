@@ -187,6 +187,9 @@ copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
     <ClInclude Include="AboutForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="EEForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="HelpForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -198,6 +201,9 @@ copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
   <ItemGroup>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EEForm.resx">
+      <DependentUpon>EEForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.h</DependentUpon>
@@ -220,6 +226,7 @@ copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="ee.png" />
     <Image Include="ramblogo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +238,9 @@ copy $(SolutionDir)x64\System.Data.SQLite.dll $(OutDir)System.Data.SQLite.dll</C
     <None Include="x86\System.Data.SQLite.dll">
       <FileType>Document</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="ee.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

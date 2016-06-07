@@ -1,4 +1,5 @@
 #pragma once
+#include "EEForm.h"
 
 namespace MSS {
 	using namespace System;
@@ -27,6 +28,7 @@ namespace MSS {
 				delete components;
 			}
 		}
+	
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label3;
@@ -89,6 +91,7 @@ namespace MSS {
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 3;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &AboutForm::pictureBox1_MouseClick);
 			// 
 			// linkLabel1
 			// 
@@ -113,14 +116,17 @@ namespace MSS {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->KeyPreview = true;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"AboutForm";
 			this->Opacity = 0.95;
 			this->ShowInTaskbar = false;
 			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"О программе";
-			this->TopMost = true;
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &AboutForm::AboutForm_KeyDown);
+			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &AboutForm::AboutForm_KeyUp);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -130,5 +136,28 @@ namespace MSS {
 	private: System::Void linkLabel1_LinkClicked(System::Object^  sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^  e) {
 		System::Diagnostics::Process::Start("http://rambrera.com/go/mss1");
 	}
+	
+	/*EASTRER EGG START*/
+	private: bool keydown = false;
+	private: System::Void pictureBox1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		if (keydown) {
+			EEForm^ eeform = gcnew EEForm();
+			eeform->ShowDialog();
+		}
+	}
+	private: System::Void AboutForm_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+		if (e->KeyCode == Keys::ShiftKey) {
+			keydown = true;
+		}
+	}
+	
+	private: System::Void AboutForm_KeyUp(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+		Debug::WriteLine("KeyUp");
+		if (e->KeyCode == Keys::ShiftKey) {
+			keydown = false;
+			Debug::WriteLine(keydown);
+		}
+	}
+	/*EASTRER EGG END*/
 };
 }

@@ -58,6 +58,7 @@ namespace MSS {
 			this->Controls->Add(this->webBrowser1);
 			this->MinimumSize = System::Drawing::Size(650, 400);
 			this->Name = L"HelpForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"Руководство пользователя";
 			this->ResumeLayout(false);
 

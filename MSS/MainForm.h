@@ -697,6 +697,7 @@ namespace MSS {
 			this->Controls->Add(this->label1);
 			this->MinimumSize = System::Drawing::Size(740, 500);
 			this->Name = L"MainForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
 			this->Text = L"MSS";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MeasureGV))->EndInit();
 			this->tableLayoutPanel1->ResumeLayout(false);
@@ -896,7 +897,7 @@ namespace MSS {
 	 */
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		AboutForm^ form = gcnew AboutForm();
-		form->Show();
+		form->ShowDialog();
 	}
 
     /**
@@ -906,7 +907,7 @@ namespace MSS {
 	 */
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		HelpForm^ form = gcnew HelpForm();
-		form->Show();
+		form->ShowDialog();
 	}
 
 	/**	

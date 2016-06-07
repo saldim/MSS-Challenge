@@ -41,6 +41,9 @@
     <ClInclude Include="HelpForm.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
+    <ClInclude Include="EEForm.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -49,12 +52,18 @@
     <EmbeddedResource Include="AboutForm.resx">
       <Filter>Файлы ресурсов</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <Filter>Файлы ресурсов</Filter>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Text Include="tables.db3" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ramblogo.png">
+      <Filter>Файлы исходного кода</Filter>
+    </Image>
+    <Image Include="ee.png">
       <Filter>Файлы исходного кода</Filter>
     </Image>
   </ItemGroup>
@@ -73,5 +82,10 @@
     <_EmbedManagedResourceFile Include="x64\System.Data.SQLite.dll">
       <Filter>dll\x64</Filter>
     </_EmbedManagedResourceFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="ee.wav">
+      <Filter>Файлы исходного кода</Filter>
+    </Media>
   </ItemGroup>
 </Project>
